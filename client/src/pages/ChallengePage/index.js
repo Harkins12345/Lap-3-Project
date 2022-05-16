@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
-import { Card, Dropdown, DropdownButton, Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
+import { Card, Dropdown, DropdownButton, Button, Stack, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import './style.css';
+
+import avatar from '../../images/avatar.png';
+import avatar1 from '../../images/avatar1.png';
 
 
 function ChallengePage() {
@@ -50,19 +53,44 @@ function ChallengePage() {
 
 
     return (
-        <div fluid={true} className="main-container">
+        <div className="main-container">
     
 
             {/* ----- ONLINE USER COLUMN ----- */}
              <div className="left-container">
-                <Card />
+                
+                {/* ----- ONLINE USERS ----- */}
+                <Stack direction="horizontal" gap={2}>
+                    <div className="stack">
+                        <Card className="card">
+                            <Card.Body className="card-body">
+                                <Card.Img src={avatar} className="avatar" width="100" height="100" alt="User Image" />
+                                <Card.Text>Science: Computing</Card.Text>
+                            </Card.Body>
+                            <Card.Header className="card-header">USERNAME</Card.Header>
+                        </Card>
+                    </div>
+                    <div className="stack">
+                        <Card className="card">
+                            <Card.Body className="card-body">
+                                <Card.Img src={avatar1} className="avatar" width="100" height="100" alt="User Image" />
+                                <Card.Text>Science: Mathematics</Card.Text>
+                            </Card.Body>
+                            <Card.Header className="card-header">USERNAME</Card.Header>
+                        </Card>
+                    </div>
+            
 
+                </Stack>
+
+                <div className="text-row row">
                 <h1>Currently Online</h1>
-                   
+                </div>  
               
             </div>
 
-            
+
+
             <div className='right-container'>
                 
                 {/* ----- SELECT CATEGORY ----- */}
