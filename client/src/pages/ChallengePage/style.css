@@ -1,0 +1,33 @@
+.right-column {
+    display: flex;
+    justify-content: center;
+    float: right;
+    
+    
+    
+}
+
+.row {
+    padding: 5%;
+    align-self: right
+}
+
+.easy-button {
+    background-color: #ffbf69;
+    color: black;
+}
+
+.medium-button {
+    background-color: #ff9f1c;
+    color: black;
+}
+
+.hard-button {
+    background-color: #d26d4d;
+    color: black;
+}
+
+.start-button {
+    background-color: black;
+   
+}
