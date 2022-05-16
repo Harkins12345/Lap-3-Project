@@ -1,0 +1,35 @@
+nav {
+    width: 100%;
+    padding: 25px;
+    display: flex;
+    justify-content: space-evenly;
+    /* align-items: center; */
+    position: relative;
+    padding: 4%;
+    
+}
+
+.left-corner{
+    display: flex;
+    justify-content: center;
+    align-items: left;
+}
+
+.right-corner{
+    display: flex;
+    justify-content: center;
+    align-items: right;
+}
+
+img {
+    padding: 2%;
+}
+
+h1 {
+    color: white;
+   
+}
+
+.left-corner {
+
+}
