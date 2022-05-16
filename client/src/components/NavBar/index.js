@@ -29,7 +29,7 @@ const NavBar = () => {
                    Home <img src={home} width="100" height="100" alt="Home" />
                 </NavLink>
 
-                <NavLink to="/game">
+                <NavLink to="/challenge">
                    Challenge <img src={connection} width="100" height="100" alt="Challenge" />
                 </NavLink>
 
@@ -37,10 +37,10 @@ const NavBar = () => {
                     My Stats <img src={account} width="100" height="100" alt="My Stats" />
                 </NavLink>
                 
-
-                <button onClick={handleClick}>
+                <NavLink to="/back" onClick={handleClick}>
                     Back <img src={leftArrow} width="100" height="100" alt="Back" />
-                </button>
+                </NavLink>
+                
             </div>
         </nav>
     );
