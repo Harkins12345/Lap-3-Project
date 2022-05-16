@@ -1,0 +1,25 @@
+.loginRegisterContainer {
+    border-radius: 5%;
+    box-shadow: -5px 10px 10px;
+    height: 100%;
+}
+
+.noBorder {
+    border: none;
+}
+
+.keepBottomBorder {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom-width: 3px;
+    border-bottom-color: black;
+}
+
+.loginSubmitButton {
+    width: 100%;
+}
+
+.loginRegisterRadios {
+    width: 100%;
+}

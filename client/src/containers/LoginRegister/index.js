@@ -1,33 +1,55 @@
-import React from 'react';
-import Form from 'react-bootstrap';
+import React, { useState } from 'react';
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import LoginForm from '../../components/LoginForm';
+import RegisterForm from '../../components/RegisterForm'
+import './style.css'
 
-function LoginRegister(mode){
+function LoginRegister() {
+    const [mode, setMode] = useState("login")
+
+    const radios = [
+        { name: 'Login', value: 'login' },
+        { name: 'Register', value: 'register' }
+    ];
+
     return (
         <>
-        {
-            mode === 'login' ?
-            <Form>
-            <Form.Group className="mb-3" controlId="formBasicEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-              </Form.Text>
-            </Form.Group>
-          
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
-              <Form.Check type="checkbox" label="Check me out" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
-          </Form>
-                : <h1>Yes</h1>
-        }
+            <Card className='loginRegisterContainer shadow-2-strong'>
+                <Card.Header>
+                    <Container>
+                        <Row>
+                            <Col>
+                                <ButtonGroup className='loginRegisterRadios'>
+                                    {radios.map((radio, idx) => (
+                                        <ToggleButton
+                                            key={idx}
+                                            id={`radio-${idx}`}
+                                            type="radio"
+                                            variant="outline-dark"
+                                            name="radio"
+                                            className="noBorder"
+                                            value={radio.value}
+                                            checked={mode === radio.value}
+                                            onChange={(e) => setMode(e.currentTarget.value)}
+                                        >
+                                            {radio.name}
+                                        </ToggleButton>
+                                    ))}
+                                </ButtonGroup>
+                            </Col>
+                            <Col></Col>
+                        </Row>
+                    </Container>
+                </Card.Header>
+                <Card.Body>
+                    {mode === 'login' ? <LoginForm/> : <RegisterForm/>}
+                </Card.Body>
+            </Card>
         </>
     );
 }
