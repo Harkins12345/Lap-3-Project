@@ -14,7 +14,7 @@ function App() {
       <main>
         <Routes>
             <Route path="/" element={<Pages.LandingPage />}/>
-            <Route path="/" element={<Pages.ChallengePage />}/>
+            <Route path="/challenge" element={<Pages.ChallengePage />}/>
 
         </Routes>
 
