@@ -1,11 +1,11 @@
 import React from 'react';
-import background from './images/background.svg';
-import './App.css';
+import './index.css';
+
 
 function App() {
   return (
-    <div style={{ backgroundImage: `url(${background})`}}>
-     
+    <div id='app' className='container'>
+      
     </div>
   );
 }
