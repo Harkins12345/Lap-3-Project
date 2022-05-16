@@ -37,10 +37,10 @@ const NavBar = () => {
                     My Stats <img src={account} width="100" height="100" alt="My Stats" />
                 </NavLink>
                 
-
-                <button onClick={handleClick}>
-                    Back <img src={leftArrow} width="100" height="100" alt="Previous Page" />
-                </button>
+                <NavLink to="/back" onClick={handleClick}>
+                    Back <img src={leftArrow} width="100" height="100" alt="Back" />
+                </NavLink>
+                
             </div>
         </nav>
     );

@@ -1,16 +1,21 @@
 import React from 'react';
-import './index.css';
-import { NavBar } from './components';
 import { Routes, Route } from 'react-router-dom';
-import * as Pages from './pages'
+import { NavBar } from './components';
+
+import * as Pages from './pages';
+
+import './index.css';
+
 
 function App() {
   return (
     <div id='app' className='container'>
       <main>
-      <NavBar />
+        <NavBar />
         <Routes>
           <Route path="/" element={<Pages.LandingPage />} />
+          <Route path="/challenge" element={<Pages.ChallengePage />} />
+          <Route path="/gameroom" element={<Pages.GameRoomPage />} />
         </Routes>
       </main>
     </div>
