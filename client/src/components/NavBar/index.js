@@ -20,27 +20,27 @@ const NavBar = () => {
     return (
         <nav>
             <div className="left-corner">
-                <img src={circle} width="100" height="100" />
+                <img src={circle} width="100" height="100" alt="Logo" />
                 <h1>3L3VAT3</h1>
             </div>
 
             <div className="right-corner">
                 <NavLink className="hamburger" to="/">
-                   Home <img src={home} width="100" height="100" />
+                   Home <img src={home} width="100" height="100" alt="Home" />
                 </NavLink>
 
-                <NavLink to="/game">
-                   Challenge <img src={connection} width="100" height="100" />
+                <NavLink to="/challenge">
+                   Challenge <img src={connection} width="100" height="100" alt="Challenge" />
                 </NavLink>
 
                 <NavLink to="/stats">
-                    My Stats <img src={account} width="100" height="100" />
+                    My Stats <img src={account} width="100" height="100" alt="My Stats" />
                 </NavLink>
                 
-
-                <button onClick={handleClick}>
-                    Back <img src={leftArrow} width="100" height="100" />
-                </button>
+                <NavLink to="/back" onClick={handleClick}>
+                    Back <img src={leftArrow} width="100" height="100" alt="Back" />
+                </NavLink>
+                
             </div>
         </nav>
     );
