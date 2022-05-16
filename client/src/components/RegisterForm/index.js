@@ -30,7 +30,9 @@ const RegisterForm = () => {
             }
 
             axios.post(`${window.location.origin}/signup`, data)
-            .then()
+            .then(res => console.log(res.data))
+            .catch(error => console.log(error))
+            
         } else if (password !== confPassword) {
             setError("Passwords do not match, please try again.")
         } else if (!validateEmail(email)) {
