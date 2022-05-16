@@ -7,12 +7,12 @@ import * as Pages from './pages'
 function App() {
   return (
     <div id='app' className='container'>
-      <NavBar />
       <main>
-                <Routes>
-                    <Route path="/" element={<Pages.LandingPage />} />
-                </Routes>
-            </main>
+      <NavBar />
+        <Routes>
+          <Route path="/" element={<Pages.LandingPage />} />
+        </Routes>
+      </main>
     </div>
   );
 }

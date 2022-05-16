@@ -6,13 +6,13 @@ import axios from 'axios';
 
 const LoginForm = () => {
 
-    const [username, setUsername] = useState("")
-    const [password, setPassword] = useState("")
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
     
     const handleLogin = (e) => {
         e.preventDefault()
         if (username !== '' && username !== undefined && password !== '' && password !== undefined) {
-            axios.post(`${window.location.origin}/`)
+            //axios.post(`${window.location.origin}/`)
         }
         setUsername('');
         setPassword('');
