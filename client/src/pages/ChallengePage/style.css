@@ -1,16 +1,28 @@
-.right-column {
+.main-container {
+    padding: 13px 5%;
     display: flex;
-    justify-content: center;
-    float: right;
-    
-    
-    
+    justify-content: space-between;
+}
+
+.left-container {
+    flex-basis: 50%;
+
+    align-self: flex-start;
+    position: sticky;
+}
+
+.right-container {
+    flex-basis: 50%;
+
+    align-self: flex-end;
+    justify-content: space-between;
+    position: sticky;
 }
 
 .row {
-    padding: 5%;
-    align-self: right
+    padding: 10%;
 }
+
 
 .easy-button {
     background-color: #ffbf69;
