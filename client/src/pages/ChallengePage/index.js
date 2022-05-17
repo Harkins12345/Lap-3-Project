@@ -4,45 +4,37 @@ import './style.css';
 
 import avatar from '../../images/avatar.png';
 import avatar1 from '../../images/avatar1.png';
+import { useDispatch } from 'react-redux';
+import { getChallenge } from '../../actions';
 
 
 function ChallengePage() {
-<></>
 
-// ------------ HANDLE BUTTON REQUEST ------------//
-    // function simulateNetworkRequest() {
-    //     return new Promise((resolve) => setTimeout(resolve, 2000));
-    //   }
-      
-    //   function LoadingButton() {
-    //     const [isLoading, setLoading] = useState(false);
-      
-    //     useEffect(() => {
-    //       if (isLoading) {
-    //         simulateNetworkRequest().then(() => {
-    //           setLoading(false);
-    //         });
-    //       }
-    //     }, [isLoading]);
-      
-    //     const handleClick = () => setLoading(true);
-      
-    //     return (
-    //       <Button
-    //         variant="primary"
-    //         disabled={isLoading}
-    //         onClick={!isLoading ? handleClick : null}
-    //       >
-    //         {isLoading ? 'Loading…' : 'Click to load'}
-    //       </Button>
-    //     );
-    //   }
-      
-    //   render(<LoadingButton />);
+    const [ category, setCategory ] = useState("");
+    const [ difficulty, setDifficulty ] = useState("");
 
-    // --------- RADIO BUTTON -----//
-    const [checked, setChecked] = useState(false);
-    const [radioValue, setRadioValue] = useState('1');
+    const dispatch = useDispatch();
+
+
+    // --------- UPDATES STATE OF CATEGORY & DIFICULTY ----- //
+    const updateCategory = e => {
+        const selectedCategory = e.target.value
+        setCategory(selectedCategory);
+    } 
+
+    const updateDifficulty = e => {
+        const selectedDifficulty = e.target.value
+        setDifficulty(selectedDifficulty);
+    } ;
+
+    // ---------- DISPATCHES THE RESULTS USING ACTIONS TO STORE ------ //
+    // ---------- NEED TO DEFINE & IMPORT ACTIONS ------ //
+    const handleSubmit = ({ selectedItems }) => {
+       dispatch(getChallenge(selectedItems));
+        
+    }
+
+
   
     const radios = [
       { name: 'EASY', value: '1', className:"easy-button"},
@@ -96,7 +88,7 @@ function ChallengePage() {
                 {/* ----- SELECT CATEGORY ----- */}
                 <div className="category-row row">
                             
-                    <DropdownButton id="category-button" title="CATEGORY" size="lg" className='d-grid gap-2'>
+                    <DropdownButton onClick={updateCategory} value={category} id="category-button" title="CATEGORY" size="lg" className='d-grid gap-2'>
 
                         <Dropdown.Item as="button">Science: Computer</Dropdown.Item>
                         <Dropdown.Item as="button">Science: Mathematics</Dropdown.Item>
@@ -104,14 +96,14 @@ function ChallengePage() {
                         <Dropdown.Item as="button">History</Dropdown.Item>
                         <Dropdown.Item as="button">Geography</Dropdown.Item>
                                 
-                    </DropdownButton>
+                    </DropdownButton >
                         
                 </div>
                 
                  {/* ----- SELECT LEVEL ----- */}
                 <div className="level-row row">
                         
-                    <ToggleButtonGroup name="toggle" size="lg">
+                    <ToggleButtonGroup onClick={updateDifficulty} value={difficulty} name="toggle" size="lg">
                         {radios.map((radio, idx) => (
                         <ToggleButton
                             key={idx}
@@ -134,7 +126,7 @@ function ChallengePage() {
                 <div className="start-row row">
                             
                     <div className='d-grid gap-2'>
-                        <Button className='start-button' size="lg"> START THE CHALLENGE</Button>
+                        <Button onClick={handleSubmit} className='start-button' size="lg"> START THE CHALLENGE</Button>
                     </div>
                             
                 </div>
