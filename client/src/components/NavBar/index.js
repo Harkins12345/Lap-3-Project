@@ -33,7 +33,7 @@ const NavBar = () => {
                    Challenge <img src={connection} width="100" height="100" alt="Challenge" />
                 </NavLink>
 
-                <NavLink to="/stats">
+                <NavLink to="/MyStats">
                     My Stats <img src={account} width="100" height="100" alt="My Stats" />
                 </NavLink>
                 
