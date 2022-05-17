@@ -6,21 +6,29 @@ import axios from 'axios';
 
 const LoginForm = () => {
 
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [err, setError] = useState("");
     
     const handleLogin = (e) => {
         e.preventDefault()
-        if (username !== '' && username !== undefined && password !== '' && password !== undefined) {
-            //axios.post(`${window.location.origin}/`)
+        if (email && password) {
+            const data = {
+                email: email,
+                password: password
+            }
+
+            axios.post(`${window.location.origin}/login`, data)
+            .then(res => console.log(res.data))
+            .catch(error => console.log(`An error has occurred: ${error}`))
         }
-        setUsername('');
+        setEmail('');
         setPassword('');
     }
 
-    const updateUsername = e => {
+    const updateEmail = e => {
         const input = e.target.value
-        setUsername(input)
+        setEmail(input)
     }
 
     const updatePassword = e => {
@@ -36,13 +44,13 @@ const LoginForm = () => {
                     label="Email address"
                     className="mb-3"
                 >
-                    <Form.Control onChange={updateUsername} required className='keepBottomBorder' type="email" placeholder="name@example.com" />
+                    <Form.Control onChange={updateEmail} value={email} required className='keepBottomBorder' type="email" placeholder="name@example.com" />
                 </FloatingLabel>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
                 <FloatingLabel controlId="floatingPassword" label="Password">
-                    <Form.Control onChange={updatePassword} required className='keepBottomBorder' type="password" placeholder="Password" />
+                    <Form.Control onChange={updatePassword} value={password} required className='keepBottomBorder' type="password" placeholder="Password" />
                 </FloatingLabel>
             </Form.Group>
             <Button className='loginSubmitButton' variant="dark" type="submit">
