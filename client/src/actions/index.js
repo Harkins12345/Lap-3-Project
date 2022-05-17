@@ -7,7 +7,6 @@ export const setSocket = socket => {
         dispatch(loadSocket(socket));
     };
 };
-<<<<<<< HEAD
 
 export const setUsername = username => {
     return async dispatch => {
@@ -20,5 +19,3 @@ export const setChallengePending = challengePending => {
         dispatch(loadChallengePending(challengePending));
     };
 };
-=======
->>>>>>> 823a1109ec859b3ec126aa46417e7322bb98de49

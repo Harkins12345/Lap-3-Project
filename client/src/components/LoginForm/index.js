@@ -5,7 +5,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import io from 'socket.io-client';
-import { setSocket } from '../../actions';
+import { setSocket, setUsername } from '../../actions';
 
 const LoginForm = () => {
 
