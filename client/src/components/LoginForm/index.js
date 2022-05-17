@@ -29,6 +29,7 @@ const LoginForm = () => {
                 if (data.user) {
                     const socket = io(window.location.origin);
                     socket.emit('setUsername', data.user);
+                    dispatch(setUsername(data.user));
                     dispatch(setSocket(socket));
                 }
             })
