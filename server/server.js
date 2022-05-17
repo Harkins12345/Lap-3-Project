@@ -18,16 +18,19 @@ io.on('connection', (socket) => {
     usersOnline++;
 })
 
-app.set('view engine', 'ejs');
-
 //Middleware
 app.use(cors('*'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({extended:true}))
+app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.text());
+app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('*', checkUser);
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'))
+})
 
 app.get('/example', requireAuth, (req, res) => {
     const token = req.headers.cookie.split('=')[1];

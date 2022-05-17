@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { LoginRegister } from '../../containers';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -10,9 +10,9 @@ const LandingPage = () => {
     return (
         <Container>
             <Row>
-                <Col><Image roundedCircle={true} fluid={true} src={landingGif}/></Col>
+                <Col><Image roundedCircle={true} fluid={true} src={landingGif} /></Col>
                 <Col></Col>
-                <Col><LoginRegister/></Col>
+                <Col><LoginRegister /></Col>
             </Row>
         </Container>
     )
