@@ -1,6 +1,6 @@
 const initState = {category: "", difficulty: "", error: false};
 
-const userReducer = (state=initState, action) => {
+const challengeReducer = (state=initState, action) => {
     switch(action.type){
         case 'SET_CATEGORY':
             return { ...state, category: action.payload };
@@ -13,4 +13,4 @@ const userReducer = (state=initState, action) => {
     };
 };
 
-export default userReducer;
+export default challengeReducer;
