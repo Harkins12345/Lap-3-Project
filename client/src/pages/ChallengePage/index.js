@@ -104,7 +104,7 @@ function ChallengePage() {
                         <Dropdown.Item as="button">History</Dropdown.Item>
                         <Dropdown.Item as="button">Geography</Dropdown.Item>
                                 
-                    </DropdownButton>
+                    </DropdownButton >
                         
                 </div>
                 
