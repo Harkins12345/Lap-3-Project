@@ -1,10 +1,15 @@
 import React, {useState} from 'react';
+import { useDispatch } from 'react-redux';
 import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import io from 'socket.io-client';
+import { setSocket } from '../../actions';
 
 const LoginForm = () => {
+
+    const dispatch = useDispatch();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,7 +24,14 @@ const LoginForm = () => {
             }
 
             axios.post(`${window.location.origin}/login`, data)
-            .then(res => console.log(res.data))
+            .then(res => res.data)
+            .then(data => {
+                if (data.user) {
+                    const socket = io(window.location.origin);
+                    socket.emit('setUsername', data.user);
+                    dispatch(setSocket(socket));
+                }
+            })
             .catch(error => console.log(`An error has occurred: ${error}`))
         }
         setEmail('');

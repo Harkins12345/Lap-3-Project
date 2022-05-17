@@ -16,6 +16,9 @@ let usersOnline = 0;
 
 io.on('connection', (socket) => {
     usersOnline++;
+    socket.on('setUsername', username => {
+        socket.data.username = username
+    })
 })
 
 //Middleware
@@ -39,4 +42,4 @@ app.get('/example', requireAuth, (req, res) => {
 
 app.use(authRoutes);
 
-module.exports = app;
+module.exports = server;
