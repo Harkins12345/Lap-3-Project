@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Card, Dropdown, DropdownButton, Button, Stack, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import './style.css';
 
 import avatar from '../../images/avatar.png';
 import avatar1 from '../../images/avatar1.png';
-import { useDispatch } from 'react-redux';
-import { getChallenge } from '../../actions';
 
 
 function ChallengePage() {
 
+    const socket = useSelector(state => state.socket);
+
     const [ category, setCategory ] = useState("");
     const [ difficulty, setDifficulty ] = useState("");
 
-    const dispatch = useDispatch();
 
 
     // --------- UPDATES STATE OF CATEGORY & DIFICULTY ----- //
@@ -30,7 +30,7 @@ function ChallengePage() {
     // ---------- DISPATCHES THE RESULTS USING ACTIONS TO STORE ------ //
     // ---------- NEED TO DEFINE & IMPORT ACTIONS ------ //
     const handleSubmit = ({ selectedItems }) => {
-       dispatch(getChallenge(selectedItems));
+       //socket.emit()
         
     }
 
@@ -113,8 +113,8 @@ function ChallengePage() {
                             type="radio"
                             name="radio"
                             value={radio.value}
-                            checked={radioValue === radio.value}
-                            onChange={(e) => setRadioValue(e.currentTarget.value)}
+                            checked={difficulty === radio.value}
+                            onChange={(e) => setDifficulty(e.currentTarget.value)}
                         >
                             {radio.name}
                         </ToggleButton>

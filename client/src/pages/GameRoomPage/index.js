@@ -59,7 +59,7 @@ function GameRoomPage() {
 
 
             <div className="right-container">
-                
+                <QuestionBox />
             </div>
 
 
