@@ -1,0 +1,56 @@
+.main-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+  
+}
+
+.left-container {
+    
+    flex-basis: 45%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+   
+    
+   
+}
+
+.right-container {
+    flex-basis: 55%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+   
+}
+
+.row {
+    padding: 10%;
+}
+
+
+.easy-button {
+    background-color: #ffbf69;
+    color: black;
+}
+
+.medium-button {
+    background-color: #ff9f1c;
+    color: black;
+}
+
+.hard-button {
+    background-color: #d26d4d;
+    color: black;
+}
+
+.start-button {
+    background-color: black;
+   
+}

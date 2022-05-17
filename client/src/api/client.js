@@ -6,8 +6,8 @@ async function getCategories() {
   try {
     const res = await axios.get(`${URL}/api_category.php`);
     return res.data.trivia_categories;
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 }
 
@@ -19,8 +19,8 @@ async function getQuestions(numOfQs, catId) {
     );
     console.log(res);
     return res.data.results;
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 }
 
