@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card } from 'react-bootstrap';
+import { QuestionBox } from '../../containers';
 import './style.css';
 
 function GameRoomPage() {
@@ -43,7 +44,7 @@ function GameRoomPage() {
 
                 <Card className="timer">
                     <Card.Body className="timer-container">
-                        <h1>Timer</h1>
+                        <h1>Time left</h1>
                         <h1>{minutes < 10 ? "0" + minutes : minutes} : 
                             {seconds < 10 ? "0" + seconds : seconds} </h1>
 
@@ -58,14 +59,6 @@ function GameRoomPage() {
 
 
             <div className="right-container">
-
-
-
-
-
-
-
-
                 
             </div>
 
