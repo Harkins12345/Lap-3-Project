@@ -34,7 +34,7 @@ function ChallengePage() {
         
     }
 
-    socket.emit()
+    // socket.emit()
 
   
     const radios = [
