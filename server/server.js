@@ -17,8 +17,10 @@ let usersOnline = 0;
 io.on('connection', (socket) => {
     usersOnline++;
     socket.on('setUsername', username => {
-        socket.data.username = username
+        socket.data.username = username;
+        console.log(username);
     })
+    //socket.on('respondChallenge')
 })
 
 //Middleware
@@ -38,6 +40,8 @@ app.get('/', (req, res) => {
 app.get('/example', requireAuth, (req, res) => {
     const token = req.headers.cookie.split('=')[1];
     const decodedToken = jwt.decode(token);
+
+    io.fetchSockets().then(sockets => console.log(sockets.length));
 });
 
 app.use(authRoutes);

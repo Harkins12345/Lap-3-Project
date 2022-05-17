@@ -13,13 +13,9 @@ function App() {
       <main>
         <NavBar />
         <Routes>
-
-            <Route path="/" element={<Pages.LandingPage />}/>
-            <Route path="/challenge" element={<Pages.ChallengePage />}/>
-            <Route path="/stats" element={<Pages.MyStatsPage />}/>
-
           <Route path="/" element={<Pages.LandingPage />} />
           <Route path="/challenge" element={<Pages.ChallengePage />} />
+          <Route path="/stats" element={<Pages.MyStatsPage />} />
           <Route path="/gameroom" element={<Pages.GameRoomPage />} />
         </Routes>
       </main>
