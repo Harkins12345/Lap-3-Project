@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
@@ -7,7 +7,7 @@ import axios from 'axios';
 import './style.css'
 
 const RegisterForm = () => {
-    
+
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -16,13 +16,15 @@ const RegisterForm = () => {
 
     const validateEmail = (email) => {
         return email.match(
-          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
-      };
+    };
+
+    const validateUsername = (username) => username.match(/[`~!@#$%^&*()_|+\-=?;:'",.<>\{\}\[\]\\\/]/gi) ? false : true;
 
     const handleRegister = (e) => {
         e.preventDefault()
-        if (username && password && email && confPassword && validateEmail(email) && password === confPassword) {
+        if (username && password && email && confPassword && validateEmail(email) && validateUsername(username) && password === confPassword && password.length >= 5 && username.length <= 20) {
             const data = {
                 email: email,
                 username: username,
@@ -30,15 +32,21 @@ const RegisterForm = () => {
             }
 
             axios.post(`${window.location.origin}/signup`, data)
-            .then(res => console.log(res.data))
-            .catch(error => console.log(error))
-            
+                .then(res => console.log(res.data))
+                .catch(error => console.log(error))
+
         } else if (password !== confPassword) {
             setError("Passwords do not match, please try again.")
         } else if (!validateEmail(email)) {
             setError("Invalid email, please try again.")
+        } else if (password.length < 5) {
+            setError("Password must be longer than 5 characters, please try again.")
+        } else if (username.length > 20) {
+            setError("Username cannot be longer than 20 characters, please try again.")
+        } else if (!validateUsername(username)) {
+            setError("Username cannot contain special characters, please try again.")
         } else {
-            setError("An erro has occurred, please try again.")
+            setError("An error occurred, please try again.")
         }
         setEmail('');
         setUsername('');
