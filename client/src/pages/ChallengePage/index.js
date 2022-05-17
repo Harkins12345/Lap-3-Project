@@ -57,7 +57,7 @@ function ChallengePage() {
                 {/* ----- ONLINE USERS ----- */}
                 <Stack value={selectedUser} direction="horizontal" gap={2}>
                     <div className="stack">
-                        <Card className="card">
+                        <Card className="online-card">
                             <Card.Body className="card-body">
                                 <Card.Img src={avatar} className="avatar" width="100" height="100" alt="User Image" />
                                 <Card.Text>Science: Computing</Card.Text>
@@ -66,7 +66,7 @@ function ChallengePage() {
                         </Card>
                     </div>
                     <div className="stack">
-                        <Card className="card">
+                        <Card className="online-card">
                             <Card.Body className="card-body">
                                 <Card.Img src={avatar1} className="avatar" width="100" height="100" alt="User Image" />
                                 <Card.Text>Science: Mathematics</Card.Text>
