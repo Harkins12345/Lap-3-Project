@@ -83,49 +83,7 @@ function MyStatsPage() {
   ))}
 </Row>
   
-{/*                 
-<Card style={{ maxWidth: '540px' }}>
-      <Row className='g-0'>
-        <Col md='4'>
-          <Card.Img src='https://mdbootstrap.com/wp-content/uploads/2020/06/vertical.webp' alt='...' fluid />
-        </Col>
-        <Col md='8'>
-          <CardBody>
-            <Card.Header>Card title</Card.Header>
-            <CardText>
-              This is a wider card with supporting text below as a natural lead-in to additional content. This
-              content is a little bit longer.
-            </CardText>
-            <CardText>
-              <small className='text-muted'>Last updated 3 mins ago</small>
-            </CardText>
-          </CardBody>
-        </Col>
-      </Row>
-    </Card>       */}
 
-
- 
-{/* 
-
-         <div className="left-container" >
-             <Row className="g-0" >
-             <Col md='4' >  
-             <Card.Img  src={monkey} width="150" height="100" alt="Logo"  />
-             </Col>
-             <Col md='8'>
-          <Card.Body>
-            <Card.Header>Card title</Card.Header>
-            <Card.Text>
-              This is a wider card with supporting text below as a natural lead-in to additional content. This
-              content is a little bit longer.
-            </Card.Text>
-          </Card.Body>
-        </Col>
-      </Row> 
-      
- 
-  </div>  */}
 
 
                 <div className="start-row row">
