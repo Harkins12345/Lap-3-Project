@@ -5,6 +5,7 @@ import './style.css';
 import avatar from '../../images/avatar.png';
 import avatar1 from '../../images/avatar1.png';
 import { useDispatch } from 'react-redux';
+import { getChallenge } from '../../actions';
 
 
 function ChallengePage() {
@@ -28,9 +29,8 @@ function ChallengePage() {
 
     // ---------- DISPATCHES THE RESULTS USING ACTIONS TO STORE ------ //
     // ---------- NEED TO DEFINE & IMPORT ACTIONS ------ //
-    const handleSubmit = selectedItem => {
-       dispatch(getCategory(selectedItem), getDifficulty(selectedItem));
-        ;
+    const handleSubmit = ({ selectedItems }) => {
+       dispatch(getChallenge(selectedItems));
         
     }
 
