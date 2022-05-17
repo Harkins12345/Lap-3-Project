@@ -5,7 +5,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import io from 'socket.io-client';
-import { setSocket } from '../../actions';
+import { setSocket, setUsername } from '../../actions';
 
 const LoginForm = () => {
 
@@ -29,6 +29,7 @@ const LoginForm = () => {
                 if (data.user) {
                     const socket = io(window.location.origin);
                     socket.emit('setUsername', data.user);
+                    dispatch(setUsername(data.user));
                     dispatch(setSocket(socket));
                 }
             })
