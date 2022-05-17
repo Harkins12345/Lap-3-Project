@@ -24,13 +24,6 @@ const handleErrors = (err) => {
     }
 
     console.log(err);
-
-    //validation errors
-    if (err.message.includes('user validation failed')) {
-        Object.values(err.errors).forEach(({ properties }) => {
-            errors[properties.path] = properties.message;
-        })
-    }
     return errors;
 }
 
@@ -64,7 +57,7 @@ async function addUser(req, res) {
     }
     catch (err) {
         const errors = handleErrors(err);
-        res.status(422).json({ err });
+        res.status(422).json({ errors });
     }
 }
 
