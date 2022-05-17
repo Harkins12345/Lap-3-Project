@@ -20,20 +20,30 @@ io.on('connection', (socket) => {
         socket.data.username = username;
         console.log(username);
     })
-    //socket.on('respondChallenge')
+    
+    socket.on('sendChallenge', data => {
+        io.fetchSockets()
+            .then(sockets => {
+                sockets.forEach(s => s.data.username === data.challengeeUsername ? s.emit('sentChallenge', data) : null)
+            })
+    })
+
+    socket.on('getOnlineUsers', data => {
+        io.fetchSockets().then(sockets => socket.emit('sendOnlineUsers', sockets.map(s => s.data.username)))
+    })
+
+    //socket.on('respondChallenge') -- Create a room and place both users inside
 })
 
 //Middleware
 app.use(cors('*'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.text());
 app.use(express.static(path.join(__dirname, 'build')));
 
-app.get('*', checkUser);
-
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
