@@ -9,15 +9,15 @@ function MyStatsPage() {
 
   return (
 
-      <div className="main-container">
+      <div className="stats-main-container">
 
         
-           <div className="left-container">
+           <div className="stats-left-container">
               
              
               
-                      <Card className="card">
-                          <Card.Body className="card-body">
+                      <Card className="stats-card">
+                          <Card.Body className="stats-card-body">
                               <Card.Img src={monkey} className="avatar" width="100" height="100" alt="User Image" />
                               <Card.Text>
                                 <h2>Battles: 578 </h2>
@@ -31,7 +31,7 @@ function MyStatsPage() {
                                 </h4>
                               </Card.Text>
                           </Card.Body>
-                          <Card.Header className="card-header">
+                          <Card.Header className="stats-card-header">
                             <h2>USERNAME</h2></Card.Header>
                             
                       </Card>
@@ -40,20 +40,20 @@ function MyStatsPage() {
           </div>
 
 
-          <div className='right-container'>
+          <div className='stats-right-container'>
 
             <Container fluid>
               
-            <h2 className="h2"> TOP USERS </h2>
+            <h2 className="stats-h2"> TOP USERS </h2>
               
               <Row>
-                <Col md={4} className="image-on-left">
+                <Col md={4} className="stats-image-on-left">
                   <img src={monkey} className="avatar" width="100" height="100" alt="User Image" />
                     
                 </Col>
 
-                <Col md={8} className="text-on-right">
-                    <div className='column'>
+                <Col md={8} className="stats-text-on-right">
+                    <div className='stats-column'>
                         
                           <h3>USERNAME</h3>
                           <h5>Battles: 578 </h5>
@@ -63,13 +63,13 @@ function MyStatsPage() {
               </Row>
 
               <Row>
-                <Col md={4} className="image-on-left">
+                <Col md={4} className="stats-image-on-left">
                   <img src={monkey} className="avatar" width="100" height="100" alt="User Image" />
                     
                 </Col>
 
-                <Col md={8} className="text-on-right">
-                    <div className='column'>
+                <Col md={8} className="stats-text-on-right">
+                    <div className='stats-column'>
                         
                           <h3>USERNAME</h3>
                           <h5>Battles: 578 </h5>

@@ -9,7 +9,6 @@
     flex-basis: 5%;
     margin-right: 25%;
 
-
     align-self: flex-start;
 }
 
@@ -18,7 +17,15 @@
     color:  #cbf3f0;
 }
 
+.online-card {
+    width: 10rem;
+    height: 15rem;
+   
+}
 
+.stack {
+    margin-top: -75px;
+}
 
 .card-body {
 

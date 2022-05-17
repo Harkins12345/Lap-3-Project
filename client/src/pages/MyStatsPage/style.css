@@ -1,4 +1,4 @@
-.main-container {
+.stats-main-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -9,26 +9,25 @@
   
 }
 
-.left-container {
+.stats-left-container {
     
     flex-basis: 45%;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-   margin-top: -150px;
    margin-left: -50px;
     
    
 }
 
 
-.h2 {
+.stats-h2 {
    margin-left: 200px;
 
 }
 
-.right-container {
+.stats-right-container {
     flex-basis: 55%;
 
     align-self: flex-end;
@@ -37,18 +36,14 @@
 
 }
 
-.column {
-  
 
-}
-
-.image-on-left {
+.stats-image-on-left {
    
     justify-content: left;
   
 }
 
-.text-on-right {
+.stats-text-on-right {
 
     background-color: black;
     color: white;
@@ -58,12 +53,12 @@
     
 }
 
-.card {
+.stats-card {
     width: 265px;
     height: 365px;
 }
 
-.right-card {
+.stats-right-card {
     width: 400px;
     height: 222px;
 }
