@@ -99,6 +99,23 @@ async function getLogout(req, res) {
     }
 }
 
+//Validate WebToken
+async function validateWebtoken(req, res) {
+    try {
+        const token = req.cookies.jwt;
+        jwt.verify(token, 'secret', (err, decodedToken) => {
+            if (err) {
+              res.status(401).json({ error: "Invalid webtoken" });
+            } else {
+                res.json({username: decodedToken.id})
+            }
+          })
+    } catch (err) {
+        console.log(err)
+        res.status(401).json({ err })
+    }
+}
 
 
-module.exports = { getSignup, addUser, getLogin, loginUser, getLogout }
+
+module.exports = { getSignup, addUser, getLogin, loginUser, getLogout, validateWebtoken }
