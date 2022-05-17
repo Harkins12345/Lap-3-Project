@@ -42,7 +42,11 @@
     justify-content: space-between;
     position: sticky;
 
-   
+    
+}
+
+.category-row {
+    margin-top: -450px;
 }
 
 .row {
