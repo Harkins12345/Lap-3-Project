@@ -11,11 +11,11 @@ async function getCategories() {
   }
 }
 
-async function getQuestions(numOfQs, catId) {
-  console.log(numOfQs, catId);
+async function getQuestions(levelId, catId) {
+  console.log(levelId, catId);
   try {
     const res = await axios.get(
-      `${URL}/api.php?amount=${numOfQs}&category=${catId}&type=multiple`
+      `${URL}/api.php?amount=10&category=${catId}&difficulty=${levelId}&type=multiple`
     );
     console.log(res);
     return res.data.results;
