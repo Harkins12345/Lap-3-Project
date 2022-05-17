@@ -10,17 +10,18 @@ import './index.css';
 function App() {
   return (
     <div id='app' className='container'>
-      <NavBar />
       <main>
+        <NavBar />
         <Routes>
+
             <Route path="/" element={<Pages.LandingPage />}/>
             <Route path="/challenge" element={<Pages.ChallengePage />}/>
             <Route path="/MyStats" element={<Pages.MyStatsPage />}/>
+
+          <Route path="/" element={<Pages.LandingPage />} />
+          <Route path="/challenge" element={<Pages.ChallengePage />} />
+          <Route path="/gameroom" element={<Pages.GameRoomPage />} />
         </Routes>
-
-
-
-
       </main>
     </div>
   );

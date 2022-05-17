@@ -20,7 +20,7 @@ const NavBar = () => {
     return (
         <nav>
             <div className="left-corner">
-                <img src={circle} width="100" height="100" alt="Logo" />
+                <img src={circle} width="100" height="100" alt="3L3VAT3 Logo" />
                 <h1>3L3VAT3</h1>
             </div>
 
