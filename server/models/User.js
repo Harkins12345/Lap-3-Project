@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const Schema = require('./Schema');
 
 module.exports = class User {
-    constructor() {}
+    constructor() { }
 
     static async findByEmail(email) {
         return new Promise(async (resolve, reject) => {
@@ -48,5 +48,29 @@ module.exports = class User {
             throw Error('Invalid password')
         }
         throw Error('Incorrect email')
+    }
+
+    static async updateGameInfo(type, amount, username) {
+        try {
+            switch (type) {
+                case 'totalScore': await Schema.User.findOneAndUpdate({ 'username': username },
+                    { '$inc': { 'gameInfo.totalScore': amount } })
+                    break;
+                case 'totalGames': await Schema.User.findOneAndUpdate({ 'username': username },
+                    { '$inc': { 'gameInfo.totalGames': amount } })
+                    break;
+                case 'totalWins': await Schema.User.findOneAndUpdate({ 'username': username },
+                    { '$inc': { 'gameInfo.totalWins': amount } })
+                    break;
+                case 'totalLosses': await Schema.User.findOneAndUpdate({ 'username': username },
+                    { '$inc': { 'gameInfo.totalLosses': amount } })
+                    break;
+                default:
+                    break;
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
     }
 }

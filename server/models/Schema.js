@@ -3,6 +3,29 @@ const bcrypt = require('bcrypt');
 const { isEmail } = require('validator');
 const uniqueValidator = require('mongoose-unique-validator');
 
+const gameInfoSchema = new mongoose.Schema({
+  totalScore: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  totalGames: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  totalWins: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  totalLosses: {
+    type: Number,
+    required: false,
+    default: 0
+  }
+})
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -22,6 +45,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'password required'],
     minlength: [5, 'Password must be at least 5 characters'],
+  },
+  gameInfo: {
+    type: gameInfoSchema,
+    required: false,
+    default: () => ({})
   }
 });
 
@@ -35,4 +63,4 @@ userSchema.plugin(uniqueValidator);
 
 const User = mongoose.model('user', userSchema);
 
-module.exports = User;
+module.exports = { User };
