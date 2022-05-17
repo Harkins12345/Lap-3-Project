@@ -16,41 +16,56 @@
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-   
+   margin-top: -150px;
+   margin-left: -50px;
     
    
 }
 
+
+.h2 {
+   margin-left: 200px;
+
+}
+
 .right-container {
     flex-basis: 55%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
+
+    align-self: flex-end;
+    justify-content: space-between;
+    position: sticky;
+
+}
+
+.column {
+  
+
+}
+
+.image-on-left {
    
+    justify-content: left;
+  
 }
 
-.row {
-    padding: 10%;
-}
+.text-on-right {
 
-
-.easy-button {
-    background-color: #ffbf69;
-    color: black;
-}
-
-.medium-button {
-    background-color: #ff9f1c;
-    color: black;
-}
-
-.hard-button {
-    background-color: #d26d4d;
-    color: black;
-}
-
-.start-button {
     background-color: black;
-   
+    color: white;
+
+    margin-right: -800px;
+
+    
 }
+
+.card {
+    width: 265px;
+    height: 365px;
+}
+
+.right-card {
+    width: 400px;
+    height: 222px;
+}
+
+
