@@ -15,6 +15,7 @@ function ChallengePage() {
 
     const socket = useSelector(state => state.socket);
 
+
     // ------ uncomment useEffect once socket is running
     useEffect(() => {
         socket.emit("getOnlineUsers")
@@ -63,7 +64,6 @@ function ChallengePage() {
        if (socket) {
         socket.on('sendChallenge', data => console.log(data));
         }
-
         dispatch(setChallengePending()); 
     }
 
@@ -80,7 +80,7 @@ function ChallengePage() {
 
 
         <div className="main-container">
-    
+
 
           
             <div className="left-container">
@@ -106,7 +106,9 @@ function ChallengePage() {
                 </Stack>
 
                 <div className="text-row row">
+
                     <h1 className="online-status">Currently Online</h1>
+
                 </div>
 
             </div>
@@ -117,16 +119,18 @@ function ChallengePage() {
 
                 {/* ----- SELECT CATEGORY ----- */}
                 <div className="category-row row">
+
                             
                     <DropdownButton onClick={handleCategory} id="category-button" title="CATEGORY" size="lg" className='d-grid gap-2'>
+
 
                         <Dropdown.Item as="button" value={17} >Science & Nature</Dropdown.Item>
                         <Dropdown.Item as="button" value={18} >Science: Computer</Dropdown.Item>
                         <Dropdown.Item as="button" value={19} >Science: Mathematics</Dropdown.Item>
                         <Dropdown.Item as="button" value={22} >Geography</Dropdown.Item>
                         <Dropdown.Item as="button" value={23} >History</Dropdown.Item>
-                        
-                                
+
+
 
                     </DropdownButton >
 
@@ -134,6 +138,7 @@ function ChallengePage() {
 
                 {/* ----- SELECT LEVEL ----- */}
                 <div className="level-row row">
+
 
 
                     <ToggleButtonGroup onClick={handleDifficulty} value={difficulty} name="toggle" size="lg">
@@ -152,6 +157,7 @@ function ChallengePage() {
                                 {radio.name}
                             </ToggleButton>
                         ))}
+
                     </ToggleButtonGroup>
 
                 </div>
