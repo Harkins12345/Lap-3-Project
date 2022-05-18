@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { useDispatch } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavBar, ModalBox } from './components';
 
 import { setUsername, setSocket } from './actions';
@@ -20,6 +20,8 @@ function App() {
   const username = useSelector(state => state.username);
 
   useEffect(() => {
+
+    dispatch(setUsername("khari"));
 
     const options = {
       headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem('token')}` })

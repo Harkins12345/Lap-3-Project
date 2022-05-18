@@ -18,6 +18,7 @@ export default function  ModalBox() {
         
           <h3>Awaiting challenge to be accepted</h3>
 
+
         
         </Modal>
 

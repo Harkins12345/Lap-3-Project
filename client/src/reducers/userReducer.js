@@ -1,4 +1,4 @@
-const initState = {username: "", totalScore: 0, gameScore: 0, challengePending: false ,error: false, socket: null};
+const initState = {username: "", totalScore: 0, gameScore: 0, requestPending: false, challengePending: false ,error: false, socket: null};
 
 const userReducer = (state=initState, action) => {
     switch(action.type){
@@ -10,7 +10,11 @@ const userReducer = (state=initState, action) => {
             return { ...state, gameScore: action.payload };
         case 'SET_TOTAL_SCORE':
             return { ...state, totalScore: action.payload, error: false };
+        case 'SET_REQUEST_PENDING':
+            return { ...state, requestPending: action.payload };
         case 'SET_CHALLENGE_PENDING':
+            return { ...state, challengePending: action.payload };
+        case 'IN_GAME':
             return { ...state, challengePending: action.payload };
         case 'SET_ERROR':
             return { ...state, error: action.payload };
