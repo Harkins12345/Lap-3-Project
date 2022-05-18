@@ -1,4 +1,4 @@
-const { FETCH_QUESTION, FETCH_TOKEN } = require("./client");
+const { FETCH_QUESTIONS } = require("./client");
 
 class TriviaQuestion {
   constructor({
@@ -11,7 +11,7 @@ class TriviaQuestion {
     this.correctAnswer = correctAnswer;
   }
   static async init(category, token) {
-    const question = await FETCH_QUESTION(category, token);
+    const question = await FETCH_QUESTIONS(category, token);
     return question;
   }
   getQuestion() {

@@ -5,6 +5,7 @@ import Button from 'react-bootstrap/Button';
 
 function QuestionBox() {
     const socket = useSelector(state => state.socket);
+    const roomId = useSelector(state => state.roomId);
 
     useEffect(() => {
         if (socket){
@@ -27,7 +28,7 @@ function QuestionBox() {
 
     const handleClick = (e) => {
         setSelect(e.target.value)
-        socket.emit('checkAnswer', questionData.answers.at(e.target.value))
+        socket.emit('checkAnswer', roomId)
         questionData.answers.at(e.target.value) === correct ? e.target.variant = 'success' : e.target.variant = 'danger'
     }
 
