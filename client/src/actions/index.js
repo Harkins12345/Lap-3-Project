@@ -19,3 +19,4 @@ export const setChallengePending = challengePending => {
         dispatch(loadChallengePending(challengePending));
     };
 };
+
