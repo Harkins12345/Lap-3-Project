@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
-import { NavBar } from './components';
+import { NavBar, ModalBox } from './components';
 import { setUsername, setSocket } from './actions';
 import io from 'socket.io-client';
 import axios from 'axios';
@@ -35,9 +35,14 @@ function App() {
 
   }, []);
 
+
+
   return (
     <div id='app' className='container'>
+
       <main>
+      <ModalBox />
+
         <NavBar />
         <Routes>
           <Route path="/" element={<Pages.LandingPage />} />
