@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { Card, Dropdown, DropdownButton, Button, Stack, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import './challenge.css';
 
 import avatar1 from '../../images/avatar1.png';
 import { UserOnlineCard } from '../../components';
-import { setChallengePending } from '../../actions';
+import { setChallengePending, setInGame } from '../../actions';
 
 
 

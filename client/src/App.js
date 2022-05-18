@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 
 import { useDispatch } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { NavBar, ModalBox } from './components';
 
-import { setUsername, setSocket } from './actions';
+import { setUsername, setSocket, setChallengePending, setInGame, setRequestPending } from './actions';
 import io from 'socket.io-client';
 import axios from 'axios';
 
@@ -18,6 +18,7 @@ function App() {
   const dispatch = useDispatch();
 
   const username = useSelector(state => state.username);
+  const inGame = useSelector(state => state.inGame);
 
   useEffect(() => {
 
@@ -32,6 +33,10 @@ function App() {
           socket.emit('setUsername', res.data.username);
           dispatch(setUsername(res.data.username));
           dispatch(setSocket(socket));
+          socket.on('sentChallenge', )
+          socket.on("gameStarted", data => {
+
+          })
         }
       })
       .catch(error => console.log(error))
@@ -54,7 +59,7 @@ function App() {
           <Route path="/" element={username ? <Navigate to="/challenge" replace={true} /> : <Pages.LandingPage />} />
           <Route path="/challenge" element={username ? <Pages.ChallengePage /> : <Navigate to="/" replace={true} />} />
           <Route path="/stats" element={username ? <Pages.MyStatsPage /> : <Navigate to="/" replace={true} />} />
-          <Route path="/gameroom" element={<Pages.GameRoomPage />} />
+          <Route path="/gameroom" element={username && inGame ? <Pages.GameRoomPage /> : <Navigate to="/challenge" replace={true} />} />
         </Routes>
       </main>
     </div>
