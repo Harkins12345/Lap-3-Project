@@ -22,14 +22,16 @@ io.on('connection', (socket) => {
     })
     
     socket.on('sendChallenge', data => {
+        socket.data['challengePending'] = true;
         io.fetchSockets()
             .then(sockets => {
                 sockets.forEach(s => s.data.username === data.challengeeUsername ? s.emit('sentChallenge', data) : null)
+                sockets.forEach(s => s.data.username === data.challengeeUsername ? s.data['challengePending'] = true : null)
             })
     })
 
     socket.on('getOnlineUsers', data => {
-        io.fetchSockets().then(sockets => socket.emit('sendOnlineUsers', sockets.map(s => s.data.username)))
+        io.fetchSockets().then(sockets => socket.emit('sendOnlineUsers', sockets.filter(s => s.data.username !== socket.data.username).map(s => s.data.username)))
     })
 
     //socket.on('respondChallenge') -- Create a room and place both users inside

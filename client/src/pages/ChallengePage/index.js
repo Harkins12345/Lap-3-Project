@@ -13,9 +13,11 @@ function ChallengePage() {
 
     const [category, setCategory] = useState("");
     const [difficulty, setDifficulty] = useState("");
+    const [usersArray, setUsers] = useState([]);
 
     if (socket) {
         socket.on('sentChallenge', data => console.log(data));
+        socket.on('sendOnlineUsers', users => setUsers(users))
     }
 
     // --------- UPDATES STATE OF CATEGORY & DIFICULTY ----- //
@@ -34,6 +36,10 @@ function ChallengePage() {
     const handleSubmit = ({ selectedItems }) => {
         //socket.emit()
 
+    }
+
+    const populateUsers = (users) => {
+        return users.map(user => <></>)
     }
 
 
@@ -79,6 +85,7 @@ function ChallengePage() {
 
                 <div className="text-row row">
                     <h1>Currently Online</h1>
+                    {usersArray && populateUsers(usersArray)}
                 </div>
 
             </div>
