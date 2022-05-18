@@ -52,7 +52,10 @@ io.on('connection', (socket) => {
                     s.data.username === response.responderUsername || s.data.username === response.requesterUsername ? s.emit("gameStarted", { category: response.category, difficulty: response.difficulty, gameRoom: roomId }) : null
                 }))
 
-            io.on("checkAnswer", clientRoomId => clientRoomId === roomId ? socket.emit('validatedAnswer', quizData[questionIndex].correct_answer) : null)
+            io.on("checkAnswer", (clientRoomId, username) => {clientRoomId === roomId ? io.fetchSockets()
+                .then(sockets => sockets.forEach(s => {
+                    s.data.username === username ? s.emit("validatedAnswer", quizData[questionIndex].correct_answer) : null
+                })) : null})
             
             setInterval(() => {
                 if (timeLeft === 10){
