@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavBar } from './components';
 import { setUsername, setSocket } from './actions';
 import io from 'socket.io-client';
@@ -15,7 +15,11 @@ function App() {
 
   const dispatch = useDispatch();
 
+  const username = useSelector(state => state.username);
+
   useEffect(() => {
+    dispatch(setUsername('Hello123'));
+
     const options = {
       headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem('token')}` })
     }
@@ -23,7 +27,6 @@ function App() {
     axios.post(`${window.location.origin}/validate`, options)
       .then(res => {
         if (res.status === 200) {
-          console.log('Hello world')
           const socket = io(window.location.origin);
           socket.emit('setUsername', res.data.username);
           dispatch(setUsername(res.data.username));
@@ -38,11 +41,11 @@ function App() {
   return (
     <div id='app' className='container'>
       <main>
-        <NavBar />
+        {username ? <NavBar /> : null}
         <Routes>
-          <Route path="/" element={<Pages.LandingPage />} />
-          <Route path="/challenge" element={<Pages.ChallengePage />} />
-          <Route path="/stats" element={<Pages.MyStatsPage />} />
+          <Route path="/" element={username ? <Navigate to="/challenge" replace={true} /> : <Pages.LandingPage />} />
+          <Route path="/challenge" element={username ? <Pages.ChallengePage /> : <Navigate to="/" replace={true} />} />
+          <Route path="/stats" element={username ? <Pages.MyStatsPage /> : <Navigate to="/" replace={true} />} />
           <Route path="/gameroom" element={<Pages.GameRoomPage />} />
         </Routes>
       </main>

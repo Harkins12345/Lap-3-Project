@@ -18,7 +18,6 @@ io.on('connection', (socket) => {
     usersOnline++;
     socket.on('setUsername', username => {
         socket.data.username = username;
-        console.log(username);
     })
     
     socket.on('sendChallenge', data => {

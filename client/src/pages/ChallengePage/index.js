@@ -2,9 +2,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-
 import { Card, Dropdown, DropdownButton, Button, Stack, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
 import './style.css';
 
@@ -18,23 +15,23 @@ function ChallengePage() {
 
     const socket = useSelector(state => state.socket);
 
-    const [ username, setUsername ] = useState("");
-    const [ category, setCategory ] = useState("");
-    const [ difficulty, setDifficulty ] = useState("");
-    const [ selectedUser, setSelectedUser ] = useState("");
+    const [username, setUsername] = useState("");
+    const [category, setCategory] = useState("");
+    const [difficulty, setDifficulty] = useState("");
+    const [selectedUser, setSelectedUser] = useState("");
 
     const dispatch = useDispatch();
-   
-  function handleSubmit()  {
-       const data = {
-           currentUser: username,
-           challengedUser: selectedUser,
-           category: category,
-           difficulty: difficulty
-       }
 
-       dispatch(socket.emit("sendRequestChallenge", data))
-       
+    function handleSubmit() {
+        const data = {
+            currentUser: username,
+            challengedUser: selectedUser,
+            category: category,
+            difficulty: difficulty
+        }
+
+        dispatch(socket.emit("sendRequestChallenge", data))
+
     }
     const [usersArray, setUsers] = useState([]);
 
@@ -56,10 +53,6 @@ function ChallengePage() {
 
     // ---------- DISPATCHES THE RESULTS USING ACTIONS TO STORE ------ //
     // ---------- NEED TO DEFINE & IMPORT ACTIONS ------ //
-    const handleSubmit = ({ selectedItems }) => {
-        //socket.emit()
-
-    }
 
     const populateUsers = (users) => {
         return users.map(user => <></>)
@@ -85,7 +78,7 @@ function ChallengePage() {
 
 
             {/* <Modal /> */}
-    
+
 
 
             {/* ----- ONLINE USER COLUMN ----- */}
@@ -128,7 +121,7 @@ function ChallengePage() {
 
                 {/* ----- SELECT CATEGORY ----- */}
                 <div className="category-row row">
-                            
+
                     <DropdownButton onClick={category} id="category-button" title="CATEGORY" size="lg" className='d-grid gap-2'>
 
                         <Dropdown.Item as="button" value={17} >Science & Nature</Dropdown.Item>
@@ -136,45 +129,47 @@ function ChallengePage() {
                         <Dropdown.Item as="button" value={19} >Science: Mathematics</Dropdown.Item>
                         <Dropdown.Item as="button" value={22} >Geography</Dropdown.Item>
                         <Dropdown.Item as="button" value={23} >History</Dropdown.Item>
-                        
-                                
 
 
-                    <DropdownButton onClick={updateCategory} value={category} id="category-button" title="CATEGORY" size="lg" className='d-grid gap-2'>
-
-                        <Dropdown.Item as="button">Science: Computer</Dropdown.Item>
-                        <Dropdown.Item as="button">Science: Mathematics</Dropdown.Item>
-                        <Dropdown.Item as="button">Science & Nature</Dropdown.Item>
-                        <Dropdown.Item as="button">History</Dropdown.Item>
-                        <Dropdown.Item as="button">Geography</Dropdown.Item>
 
 
+                        <DropdownButton onClick={updateCategory} value={category} id="category-button" title="CATEGORY" size="lg" className='d-grid gap-2'>
+
+                            <Dropdown.Item as="button">Science: Computer</Dropdown.Item>
+                            <Dropdown.Item as="button">Science: Mathematics</Dropdown.Item>
+                            <Dropdown.Item as="button">Science & Nature</Dropdown.Item>
+                            <Dropdown.Item as="button">History</Dropdown.Item>
+                            <Dropdown.Item as="button">Geography</Dropdown.Item>
+
+
+                        </DropdownButton >
                     </DropdownButton >
 
                 </div>
 
                 {/* ----- SELECT LEVEL ----- */}
                 <div className="level-row row">
-     
+
                     <ToggleButtonGroup onClick={difficulty} name="toggle" size="lg">
 
 
-                    <ToggleButtonGroup onClick={updateDifficulty} value={difficulty} name="toggle" size="lg">
+                        <ToggleButtonGroup onClick={updateDifficulty} value={difficulty} name="toggle" size="lg">
 
-                        {radios.map((radio, idx) => (
-                            <ToggleButton
-                                key={idx}
-                                id={`radio-${idx}`}
-                                className={radio.className}
-                                type="radio"
-                                name="radio"
-                                value={radio.value}
-                                checked={difficulty === radio.value}
-                                onChange={(e) => setDifficulty(e.currentTarget.value)}
-                            >
-                                {radio.name}
-                            </ToggleButton>
-                        ))}
+                            {radios.map((radio, idx) => (
+                                <ToggleButton
+                                    key={idx}
+                                    id={`radio-${idx}`}
+                                    className={radio.className}
+                                    type="radio"
+                                    name="radio"
+                                    value={radio.value}
+                                    checked={difficulty === radio.value}
+                                    onChange={(e) => setDifficulty(e.currentTarget.value)}
+                                >
+                                    {radio.name}
+                                </ToggleButton>
+                            ))}
+                        </ToggleButtonGroup>
                     </ToggleButtonGroup>
 
                 </div>
