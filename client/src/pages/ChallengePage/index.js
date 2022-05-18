@@ -24,8 +24,8 @@ function ChallengePage() {
 
     function handleSubmit() {
         const data = {
-            currentUser: username,
-            challengedUser: selectedUser,
+            requesterUsername: username,
+            responderUsername: selectedUser,
             category: category,
             difficulty: difficulty
         }
@@ -37,7 +37,7 @@ function ChallengePage() {
 
     if (socket) {
         socket.on('sentChallenge', data => console.log(data));
-        socket.on('sendOnlineUsers', users => setUsers(users))
+        socket.on('sendOnlineUsers', users => setUsers(users));
     }
 
     // --------- UPDATES STATE OF CATEGORY & DIFICULTY ----- //

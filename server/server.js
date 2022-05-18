@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser, jwt } = require('./middleware/authMiddleware');
 const bodyParser = require("body-parser");
@@ -24,9 +25,20 @@ io.on('connection', (socket) => {
         socket.data['challengePending'] = true;
         io.fetchSockets()
             .then(sockets => {
-                sockets.forEach(s => s.data.username === data.challengeeUsername ? s.emit('sentChallenge', data) : null)
-                sockets.forEach(s => s.data.username === data.challengeeUsername ? s.data['challengePending'] = true : null)
+                sockets.forEach(s => s.data.username === data.responderUsername ? s.emit('sentChallenge', data) : null)
+                sockets.forEach(s => s.data.username === data.responderUsername ? s.data['challengePending'] = true : null)
             })
+    })
+
+    socket.on('challengeResponse', response => {
+        const roomId = uuidv4();
+        io.fetchSockets()
+            .then(sockets => {
+                sockets.forEach(s => s.data.username === data.responderUsername ? s.emit('sentChallenge', data) : null)
+                sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['challengePending'] = false : null)
+            })
+        io.fetchSockets()
+            .then(sockets => sockets.forEach(s => s.data.username === response.responderUsername || s.data.username === response.requesterUsername ? s.join(roomId) : null))
     })
 
     socket.on('getOnlineUsers', data => {
