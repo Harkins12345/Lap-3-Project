@@ -9,42 +9,14 @@ function GameRoomPage() {
     const socket = useSelector(state => state.socket)
 
     const [score, setScore] = useState(0);
-    const [seconds, setSeconds] = useState(0);
-    const [minutes, setMinutes] = useState(0);
+    const [timeLeft, setTime] = useState(0);
 
     useEffect(() => {
         if (socket){
-            socket.on('sendScore', data => data)
+            socket.on('sendScore', data => setScore(data));
+            socket.on('tickTimer', time => setTime());
         }
     }, [])
-
-    var timer;
-    useEffect(() => {
-
-    timer = setInterval(() => {
-
-        setSeconds(seconds+1);
-
-            if(seconds === 59){
-                setMinutes(minutes+1);
-                setSeconds(0);
-            }
-        }, 1000)
-
-        return () => clearInterval(timer);
-
-    })
-
-    const restart = () => {
-
-        setSeconds(0);
-        setSeconds(0);
-    }
-
-    const stopTimer = () => {
-
-        clearInterval(timer);
-    }
    
     return (
         <div className="main-container">
@@ -53,36 +25,19 @@ function GameRoomPage() {
             <div className="left-container">
 
                 <Card className="timer">
+                    <Card.Header>Your Score: {score}</Card.Header>
                     <Card.Body className="timer-container">
                         <h1>Time left</h1>
-                        <h1>{minutes < 10 ? "0" + minutes : minutes} : 
-                            {seconds < 10 ? "0" + seconds : seconds} </h1>
-
-                        <button className="restart" onClick={restart}>RESTART</button>
-                        <button className="stop" onClick={stopTimer}>STOP</button>
+                        <h1>{timeLeft}</h1>
 
                     </Card.Body>
                 </Card>
 
             </div>
 
-
-
             <div className="right-container">
                 <QuestionBox />
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
         </div>
 
     )
