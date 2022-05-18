@@ -13,6 +13,7 @@ const NavBar = () => {
 
     const navigate = useNavigate();
 
+    // ---------- ADD FUNCTIONALITY TO LOGOUT USER INSTEAD ------ /// 
     function handleClick() {
         navigate(-1);
     }
@@ -25,20 +26,32 @@ const NavBar = () => {
             </div>
 
             <div className="right-corner">
-                <NavLink className="hamburger" to="/">
-                   Home <img src={home} width="100" height="100" alt="Home" />
+                <NavLink className="nav-item" to="/">
+                    <div className='image-container'>
+                        <img src={home} width="100" height="100" alt="Home" />
+                        <h5 className="image-text">Home</h5>
+                   </div>
                 </NavLink>
 
-                <NavLink to="/challenge">
-                   Challenge <img src={connection} width="100" height="100" alt="Challenge" />
+                <NavLink className="nav-item" to="/challenge">
+                    <div className='image-container'>
+                        <img src={connection} width="100" height="100" alt="Challenge" />
+                        <h5 className="image-text-challenge">Challenge</h5>
+                    </div>
                 </NavLink>
 
-                <NavLink to="/MyStats">
-                    My Stats <img src={account} width="100" height="100" alt="My Stats" />
+                <NavLink className="nav-item" to="/stats">
+                    <div className='image-container'>  
+                        <img src={account} width="100" height="100" alt="My Stats" />
+                        <h5 className="image-text">Stats</h5>
+                    </div>
                 </NavLink>
                 
-                <NavLink to="/back" onClick={handleClick}>
-                    Back <img src={leftArrow} width="100" height="100" alt="Back" />
+                <NavLink className="nav-item" to="/back" onClick={handleClick}>
+                    <div className='image-container'>     
+                        <img src={leftArrow} width="100" height="100" alt="Back" />
+                        <h5 className="image-text">Logout</h5>
+                    </div>
                 </NavLink>
                 
             </div>

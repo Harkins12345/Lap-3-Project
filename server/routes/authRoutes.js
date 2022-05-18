@@ -13,5 +13,8 @@ router.route('/login')
 
 router.route('/logout')
     .get(authController.getLogout)
+
+router.route('/validate')
+    .post(authController.validateWebtoken)
     
 module.exports = router;

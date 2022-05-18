@@ -1,4 +1,4 @@
-.main-container {
+.stats-main-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -9,48 +9,35 @@
   
 }
 
-.left-container {
+.stats-left-container {
     
     flex-basis: 45%;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
-   
+   margin-left: -50px;
     
-   
 }
 
-.right-container {
+
+.stats-h2 {
+   margin-left: 200px;
+
+}
+
+.stats-right-container {
     flex-basis: 55%;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-   
+
+    align-self: flex-end;
+    justify-content: space-between;
+    position: sticky;
+
 }
 
-.row {
-    padding: 10%;
+.stats-right-card {
+    width: 400px;
+    height: 222px;
 }
 
 
-.easy-button {
-    background-color: #ffbf69;
-    color: black;
-}
-
-.medium-button {
-    background-color: #ff9f1c;
-    color: black;
-}
-
-.hard-button {
-    background-color: #d26d4d;
-    color: black;
-}
-
-.start-button {
-    background-color: black;
-   
-}

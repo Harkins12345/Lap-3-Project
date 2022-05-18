@@ -6,21 +6,21 @@ async function getCategories() {
   try {
     const res = await axios.get(`${URL}/api_category.php`);
     return res.data.trivia_categories;
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 }
 
-async function getQuestions(numOfQs, catId) {
-  console.log(numOfQs, catId);
+async function getQuestions(levelId, catId) {
+  console.log(levelId, catId);
   try {
     const res = await axios.get(
-      `${URL}/api.php?amount=${numOfQs}&category=${catId}&type=multiple`
+      `${URL}/api.php?amount=10&category=${catId}&difficulty=${levelId}&type=multiple`
     );
     console.log(res);
     return res.data.results;
-  } catch (e) {
-    console.log(e);
+  } catch (err) {
+    console.log(err);
   }
 }
 

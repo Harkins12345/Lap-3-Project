@@ -1,0 +1,18 @@
+.stats-image-on-left {
+   
+    justify-content: left;
+}
+
+.stats-text-on-right {
+
+    background-color: black;
+    color: white;
+
+    margin-right: -800px;
+ 
+}
+
+.stats-right-card {
+    width: 400px;
+    height: 222px;
+}

@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Card } from 'react-bootstrap';
+import { QuestionBox } from '../../containers';
 import './style.css';
 
 function GameRoomPage() {
 
+    const socket = useSelector(state => state.socket)
+
+    const [score, setScore] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
+
+    useEffect(() => {
+        if (socket){
+            socket.on('sendScore', data => data)
+        }
+    }, [])
 
     var timer;
     useEffect(() => {
@@ -43,7 +54,7 @@ function GameRoomPage() {
 
                 <Card className="timer">
                     <Card.Body className="timer-container">
-                        <h1>Timer</h1>
+                        <h1>Time left</h1>
                         <h1>{minutes < 10 ? "0" + minutes : minutes} : 
                             {seconds < 10 ? "0" + seconds : seconds} </h1>
 
@@ -58,15 +69,7 @@ function GameRoomPage() {
 
 
             <div className="right-container">
-
-
-
-
-
-
-
-
-                
+                <QuestionBox />
             </div>
 
 
