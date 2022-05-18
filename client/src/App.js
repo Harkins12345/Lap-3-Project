@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { NavBar, ModalBox } from './components';
+import { NavBar, ChallengeModalBox, RequestModalBox } from './components';
 
 import { setUsername, setSocket } from './actions';
 import io from 'socket.io-client';
@@ -48,7 +48,9 @@ function App() {
 
       <main>
 
-      <ModalBox />
+      <ChallengeModalBox />
+
+      <RequestModalBox />
 
         <NavBar />
 
