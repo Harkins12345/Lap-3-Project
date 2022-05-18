@@ -36,11 +36,6 @@ function ChallengePage() {
        dispatch(socket.emit("sendRequestChallenge", data))
        
     }
-
-   
-
-    const [category, setCategory] = useState("");
-    const [difficulty, setDifficulty] = useState("");
     const [usersArray, setUsers] = useState([]);
 
     if (socket) {
