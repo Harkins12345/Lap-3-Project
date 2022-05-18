@@ -1,4 +1,4 @@
-const initState = { username: "", totalScore: 0, gameScore: 0, requestPending: false, challengePending: false, inGame: false, error: false, socket: null };
+const initState = {username: "", totalScore: 0, gameScore: 0, requestPending: false, challengePending: false , inGame: false, error: false, socket: null};
 
 const userReducer = (state = initState, action) => {
     switch (action.type) {

@@ -50,7 +50,7 @@ const NavBar = () => {
                 <NavLink className="nav-item" to="/back" onClick={handleClick}>
                     <div className='image-container'>     
                         <img src={leftArrow} width="100" height="100" alt="Back" />
-                        <h5 className="image-text">Back</h5>
+                        <h5 className="image-text">Logout</h5>
                     </div>
                 </NavLink>
                 

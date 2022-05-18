@@ -18,10 +18,10 @@ function ChallengePage() {
 
 
     // ------ uncomment useEffect once socket is running
-    useEffect(() => {
-        socket.emit("getOnlineUsers")
-        socket.on("sendOnlineUsers", populateUsers)
-    }, [])
+    // useEffect(() => {
+    //     socket.emit("getOnlineUsers")
+    //     socket.on("sendOnlineUsers", populateUsers)
+    // }, [])
 
 
     const [ username, setUsername ] = useState("");
@@ -49,8 +49,11 @@ function ChallengePage() {
    } 
 
    // ----- for selected user / challengeee
+   // ------ currentTarget goes to find parent element with event handler
    function handleSelectedUser(e) {
-       setSelectedUser(e.target.value);
+       console.log(e.currentTarget);
+       console.log(e.currentTarget.dataset.name);
+       setSelectedUser(e.currentTarget.dataset.name);
    }
 
 
@@ -91,12 +94,13 @@ function ChallengePage() {
                     <div className="stack">
 
                         {/* --------- INSIDE STACK, CREATE NEW CARD FOR EACH USER ONLINE ----- */}
-                        {users.map(u => <UserOnlineCard onClick={handleSelectedUser} />)}
+                        {/* {users.map(u => <UserOnlineCard onClick={handleSelectedUser} />)} */}
 
                        
                     </div>
                     <div className="stack">
-                        <Card className="online-card">
+                        <Card className="online-card" data-name="elevate" onClick={handleSelectedUser}>
+
                             <Card.Body className="card-body">
                                 <Card.Img src={avatar1} className="avatar" width="100" height="100" alt="User Image" />
                                 <Card.Text>Science: Mathematics</Card.Text>
@@ -116,7 +120,8 @@ function ChallengePage() {
 
 
 
-            <div className='right-container'>
+            <div className='right-container'> 
+                { selectedUser && <>
 
                 {/* ----- SELECT CATEGORY ----- */}
                 <div className="category-row row">
@@ -172,7 +177,9 @@ function ChallengePage() {
 
                 </div>
 
+                </>}   
             </div>
+        
 
         </div>
     )

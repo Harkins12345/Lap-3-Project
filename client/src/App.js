@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { NavBar, ModalBox } from './components';
+import { NavBar } from './components';;
+import { NavBar, ChallengeModalBox, RequestModalBox } from './components';
 
 import { setUsername, setSocket, setChallengePending, setInGame, setRequestPending } from './actions';
 import io from 'socket.io-client';
@@ -22,6 +23,8 @@ function App() {
 
   useEffect(() => {
 
+    dispatch(setUsername("khari"));
+
     const options = {
       headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem('token')}` })
     }
@@ -33,7 +36,9 @@ function App() {
           socket.emit('setUsername', res.data.username);
           dispatch(setUsername(res.data.username));
           dispatch(setSocket(socket));
-          socket.on('sentChallenge', )
+          socket.on('sentChallenge', data => {
+            dispatch(setRequestPending(true))
+          })
           socket.on("gameStarted", data => {
 
           })
@@ -51,7 +56,9 @@ function App() {
 
       <main>
 
-      <ModalBox />
+      <ChallengeModalBox />
+
+      <RequestModalBox />
 
         <NavBar />
 
