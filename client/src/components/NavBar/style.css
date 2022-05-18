@@ -10,6 +10,14 @@ nav {
     
 }
 
+.nav-item  {
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+    padding: 2%;
+    
+}
+
 .left-corner{
     display: flex;
     justify-content: center;
@@ -20,7 +28,23 @@ nav {
     display: flex;
     justify-content: center;
     align-items: right;
+    margin-left: 500px;
 }
+
+.image-text {
+    color: black;
+    position: relative;
+    margin-left: 27px;
+    margin-top: -45px;
+}
+
+.image-text-challenge {
+    color: black;
+    position: relative;
+    margin-left: 10px;
+    margin-top: -44px;
+}
+
 
 img {
     padding: 2%;
@@ -29,9 +53,6 @@ img {
 
 h1 {
     color: white;
-   
-}
-
-.left-corner {
-
+    margin-top: 25px;
+   font-size: 300%;
 }

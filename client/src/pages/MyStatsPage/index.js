@@ -1,106 +1,95 @@
 import React, { useState } from 'react';
-import { Card, Button } from 'react-bootstrap';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { Card, Col, Container, Row } from 'react-bootstrap';
+;
 import './style.css';
 import monkey from '../../images/monkey.png';
 
 
 function MyStatsPage() {
-<></>
 
-// ------------ HANDLE BUTTON REQUEST ------------//
-    // function simulateNetworkRequest() {
-    //     return new Promise((resolve) => setTimeout(resolve, 2000));
-    //   }
-      
-    //   function LoadingButton() {
-    //     const [isLoading, setLoading] = useState(false);
-      
-    //     useEffect(() => {
-    //       if (isLoading) {
-    //         simulateNetworkRequest().then(() => {
-    //           setLoading(false);
-    //         });
-    //       }
-    //     }, [isLoading]);
-      
-    //     const handleClick = () => setLoading(true);
-      
-    //     return (
-    //       <Button
-    //         variant="primary"
-    //         disabled={isLoading}
-    //         onClick={!isLoading ? handleClick : null}
-    //       >
-    //         {isLoading ? 'Loading…' : 'Click to load'}
-    //       </Button>
-    //     );
-    //   }
-      
-    //   render(<LoadingButton />);
+  return (
 
-    // --------- RADIO BUTTON -----//
-   
+      <div className="stats-main-container">
 
-
-    return (
-        <div fluid={true} className="main-container" >
-    
-
-            {/* ----- ONLINE USER COLUMN ----- */}
-             <div className="left-container" >
-             <Row xs={3} md={3} className="g-1" size="3-g">
-  {Array.from({ length: 6 }).map((_, idx) => (
-    <Col >
-      <Card >
-        <Card.Img  src={monkey} width="150" height="100" alt="Logo"  />
-      </Card>
-      <h3 >User</h3> 
-    </Col>
-
-  ))}
-  <h3 font-color="white">Currently Online</h3> 
-</Row>
-
-   </div>
-   
- 
-            <div className='right-container'>
-            
+        
+           <div className="stats-left-container">
+              
+             
+              
+                      <Card className="stats-card">
+                          <Card.Body className="stats-card-body">
+                              <Card.Img src={monkey} className="avatar" width="100" height="100" alt="User Image" />
+                              <Card.Text>
+                                <h2>Battles: 578 </h2>
+                                <h4>Current Score: 25, 567</h4>
+                                <h4>Categories: 
+                                    <ul>
+                                      <li>Science & Nature</li>
+                                      <li>History</li>
+                                      <li>Georgraphy</li>
+                                    </ul> 
+                                </h4>
+                              </Card.Text>
+                          </Card.Body>
+                          <Card.Header className="stats-card-header">
+                            <h2>USERNAME</h2></Card.Header>
+                            
+                      </Card>
                 
-                {/* ----- SELECT CATEGORY ----- */}
-                <div className="category-row row"> 
-                <Row xs={3} md={1} className="g-1" size="5-g">
-                <h3 font-color="black" >Top Students</h3>  
-  {Array.from({ length: 3}).map((_, idx) => (
-    <Col >
-      <Card >
-        <Card.Header> Hi </Card.Header>
-      </Card>
-      <h3 >User</h3> 
-    </Col>
-  ))}
-</Row>
-  
-
-
-
-                <div className="start-row row">
-                        <Button className='start-button' size="lg"> START THE CHALLENGE</Button>
-                  
-                        </div>       
-                </div>
             
-            </div>
-                
-        </div>
-    )
+          </div>
+
+
+          <div className='stats-right-container'>
+
+            <Container fluid>
+              
+            <h2 className="stats-h2"> TOP USERS </h2>
+              
+              <Row>
+                <Col md={4} className="stats-image-on-left">
+                  <img src={monkey} className="avatar" width="100" height="100" alt="User Image" />
+                    
+                </Col>
+
+                <Col md={8} className="stats-text-on-right">
+                    <div className='stats-column'>
+                        
+                          <h3>USERNAME</h3>
+                          <h5>Battles: 578 </h5>
+                          <h6>Current Score: 25, 567</h6>   
+                    </div>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={4} className="stats-image-on-left">
+                  <img src={monkey} className="avatar" width="100" height="100" alt="User Image" />
+                    
+                </Col>
+
+                <Col md={8} className="stats-text-on-right">
+                    <div className='stats-column'>
+                        
+                          <h3>USERNAME</h3>
+                          <h5>Battles: 578 </h5>
+                          <h6>Current Score: 25, 567</h6>   
+                    </div>
+                </Col>
+              </Row>
+
+
+            </Container>    
+            
+
+          </div>
+            
+              
+      </div>
+  )
 
 
 }
-
-
 
 
 export default MyStatsPage;
