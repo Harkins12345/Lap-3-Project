@@ -68,7 +68,6 @@ module.exports = class User {
                 default:
                     break;
             }
-
         } catch (err) {
             console.log(err)
         }
