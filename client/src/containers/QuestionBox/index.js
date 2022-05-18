@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -6,18 +6,28 @@ import Button from 'react-bootstrap/Button';
 function QuestionBox() {
     const socket = useSelector(state => state.socket);
 
+    useEffect(() => {
+        if (socket){
+            socket.on('sendQuestion', question => {
+                setQuestionData(question);
+                setSelect(null);
+                setCorrect(null);
+            })
+            socket.on('validatedAnswer', answer => setCorrect(answer))
+        }
+    }, [])
+
     const [questionData, setQuestionData] = useState({
         question: "Hello world?",
-        answers: ['Yes', 'No', 'Maybe', 'Hello!']
+        answers: ["Hello", "World", "Yes", "No"]
     });
 
-    const [correct, setCorrect] = useState("Yes");
-
+    const [correct, setCorrect] = useState("Hello");
     const [select, setSelect] = useState(null);
 
     const handleClick = (e) => {
         setSelect(e.target.value)
-        console.log(questionData.answers.at(e.target.value))
+        socket.emit('checkAnswer', questionData.answers.at(e.target.value))
         questionData.answers.at(e.target.value) === correct ? e.target.variant = 'success' : e.target.variant = 'danger'
     }
 
@@ -31,8 +41,6 @@ function QuestionBox() {
         }
     }
 
-    //socket.on('sendQuestion', data => setQuestionData(data));
-
     return (
         <Card>
             { questionData.question ? <Card.Header>{questionData.question}</Card.Header> : <Card.Header>Loading Question...</Card.Header> }
@@ -41,7 +49,8 @@ function QuestionBox() {
                 <Button 
                 key={index} 
                 value={index} 
-                onClick={handleClick} 
+                onClick={handleClick}
+                size='lg' 
                 className='answerSelect'
                 disabled={select ? true : false}
                 variant={handleVariant(index)}>{answer}</Button>) : <h1>Loading Answers...</h1>}

@@ -18,7 +18,6 @@ function App() {
   const username = useSelector(state => state.username);
 
   useEffect(() => {
-    dispatch(setUsername('Hello123'));
 
     const options = {
       headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem('token')}` })

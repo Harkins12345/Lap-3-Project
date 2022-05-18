@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
         socket.data.username = username;
     })
     
-    socket.on('sendChallenge', data => {
+    socket.on('sendRequestChallenge', data => {
         socket.data['challengePending'] = true;
         io.fetchSockets()
             .then(sockets => {
