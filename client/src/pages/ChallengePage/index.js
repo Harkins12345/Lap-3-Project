@@ -1,13 +1,11 @@
-
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { Card, Dropdown, DropdownButton, Button, Stack, ToggleButtonGroup, ToggleButton } from 'react-bootstrap';
-import './style.css';
+import './challenge.css';
 
-import avatar from '../../images/avatar.png';
 import avatar1 from '../../images/avatar1.png';
-
+import { UserOnlineCard } from '../../components';
 import { setChallengePending } from '../../actions';
 
 
@@ -17,10 +15,7 @@ function ChallengePage() {
 
     const socket = useSelector(state => state.socket);
 
-
-    // ---- emit:  GET ONLINE USERS FIRST!
-    // ---- on: SERVER RECEIVES MESSAGES 
-
+    // ------ uncomment useEffect once socket is running
     useEffect(() => {
         socket.emit("getOnlineUsers")
         socket.on("sendOnlineUsers", populateUsers)
@@ -46,11 +41,12 @@ function ChallengePage() {
         setDifficulty(e.target.value);
     }
 
-    // ---- 
+    // ---- to get online users
    function populateUsers(data) {
        setUsers(data);
    } 
 
+   // ----- for selected user / challengeee
    function handleSelectedUser(e) {
        setSelectedUser(e.target.value);
    }
@@ -68,10 +64,8 @@ function ChallengePage() {
         socket.on('sendChallenge', data => console.log(data));
         }
 
-        dispatch(setChallengePending());
-       
+        dispatch(setChallengePending()); 
     }
-
 
 
     const radios = [
@@ -88,28 +82,17 @@ function ChallengePage() {
         <div className="main-container">
     
 
-            {/* ----- ONLINE USER COLUMN ----- */}
+          
             <div className="left-container">
 
-                {/* ----- ONLINE USERS ----- */}
-
+                {/* ------------------ ONLINE USERS ------------- */}
                 <Stack value={selectedUser} direction="horizontal" gap={2}>
                     <div className="stack">
 
-                        {/* ------ INSIDE STACK, CREATE NEW CARD FOR EACH USER ONLINE ----- */}
-                        {users.map(u => <Card onClick={handleSelectedUser} />)}
+                        {/* --------- INSIDE STACK, CREATE NEW CARD FOR EACH USER ONLINE ----- */}
+                        {users.map(u => <UserOnlineCard onClick={handleSelectedUser} />)}
 
-                        <Card className="online-card">
-
-
-
-
-                            <Card.Body className="card-body">
-                                <Card.Img src={avatar} className="avatar" width="100" height="100" alt="User Image" />
-                                <Card.Text>Science: Computing</Card.Text>
-                            </Card.Body>
-                            <Card.Header className="card-header">USERNAME</Card.Header>
-                        </Card>
+                       
                     </div>
                     <div className="stack">
                         <Card className="online-card">
@@ -120,12 +103,10 @@ function ChallengePage() {
                             <Card.Header className="card-header">USERNAME</Card.Header>
                         </Card>
                     </div>
-
-
                 </Stack>
 
                 <div className="text-row row">
-                    <h1>Currently Online</h1>
+                    <h1 className="online-status">Currently Online</h1>
                 </div>
 
             </div>

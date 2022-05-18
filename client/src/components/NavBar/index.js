@@ -13,6 +13,7 @@ const NavBar = () => {
 
     const navigate = useNavigate();
 
+    // ---------- ADD FUNCTIONALITY TO LOGOUT USER INSTEAD ------ /// 
     function handleClick() {
         navigate(-1);
     }
