@@ -1,0 +1,17 @@
+.online-card {
+    width: 10rem;
+    height: 15rem;
+   
+}
+
+.card-body {
+
+    background-color: #ffbf69;
+    border-style: outset;
+    border-color:  #ccff33;
+    border-width: 4px;
+}
+
+.card-header {
+    background-color: #ff9f1c;
+}

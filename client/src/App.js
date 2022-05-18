@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Routes, Route, Navigate } from 'react-router-dom';
-import { NavBar } from './components';
+
+import { useDispatch } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
+import { NavBar, ModalBox } from './components';
+
 import { setUsername, setSocket } from './actions';
 import io from 'socket.io-client';
 import axios from 'axios';
@@ -37,10 +39,17 @@ function App() {
 
   }, []);
 
+
+
   return (
     <div id='app' className='container'>
+
       <main>
-        {username ? <NavBar /> : null}
+
+      <ModalBox />
+
+        <NavBar />
+
         <Routes>
           <Route path="/" element={username ? <Navigate to="/challenge" replace={true} /> : <Pages.LandingPage />} />
           <Route path="/challenge" element={username ? <Pages.ChallengePage /> : <Navigate to="/" replace={true} />} />
