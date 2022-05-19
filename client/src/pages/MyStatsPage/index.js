@@ -49,7 +49,7 @@ function MyStatsPage() {
             <Container fluid>
             <h2 className="stats-h2"> TOP USERS </h2>
               
-              {statsData.topPlayers ? statsData.topPlayers.map(player => <HighScoresCard username={player.gameInfo.username} totalGames={player.gameInfo.totalGames} totalScore={player.gameInfo.totalScore}/>) : <h1>Loading...</h1>}
+              {statsData.topPlayers ? statsData.topPlayers.map(player => <HighScoresCard username={player.username} totalGames={player.gameInfo.totalGames} totalScore={player.gameInfo.totalScore}/>) : <h1>Loading...</h1>}
              
             </Container>    
             

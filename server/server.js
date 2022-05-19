@@ -3,7 +3,6 @@ const cors = require('cors');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const cookieParser = require('cookie-parser');
-const { requireAuth, jwt } = require('./middleware/authMiddleware');
 const User = require('./models/User');
 const { fetchQuestions, shuffleAnswers } = require('./models/Quiz');
 const bodyParser = require("body-parser");
@@ -19,27 +18,36 @@ let usersOnline = 0;
 
 io.on('connection', (socket) => {
     usersOnline++;
+
+    // Upon connection identify the connection with username
+    // socket.data can contain anything you want
     socket.on('setUsername', username => {
         socket.data.username = username;
     })
 
-    socket.on('getStats', async() => {
+    // Get stats when navigating to stats page
+    socket.on('getStats', async () => {
+        // Personal player stats
         const playerStats = await User.getPlayerStats(socket.data.username)
+
+        // All other player stats
         const allPlayerStats = await User.getAllPlayerStats()
-        allPlayerStats.sort(function(playerA, playerB) {
+        allPlayerStats.sort(function (playerA, playerB) {
             return playerA['gameInfo']['totalScore'] - playerB['gameInfo']['totalScore'];
-          }).reverse()
-        console.log(allPlayerStats.slice(0, 3))
+        }).reverse()
         socket.emit('sendStats', {
             totalGames: playerStats.totalGames,
             totalScore: playerStats.totalScore,
             totalWins: playerStats.totalWins,
             totalLosses: playerStats.totalLosses,
             totalDraws: playerStats.totalDraws,
+            // Grab just the top 3 players (by score)
             topPlayers: allPlayerStats.slice(0, 3)
         })
     })
 
+    // Sending out challenge request from challenge page
+    // This will lock the user's screen until they respond
     socket.on('sendRequestChallenge', data => {
         socket.data['challengePending'] = true;
         socket.data['challengeData'] = {
