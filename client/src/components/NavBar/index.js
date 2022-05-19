@@ -1,6 +1,6 @@
 import React from 'react';
 import './style.css';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import circle from '../../images/circle.png';
 import home from '../../images/home.gif';
@@ -11,11 +11,10 @@ import leftArrow from '../../images/left-arrow.gif';
 
 const NavBar = () => {
 
-    const navigate = useNavigate();
-
     // ---------- ADD FUNCTIONALITY TO LOGOUT USER INSTEAD ------ /// 
     function handleClick() {
-        navigate(-1);
+        document.cookie = "jwt=; expires=Thu, 01 Jan 1970 00:00:01 GMT;"
+        window.location.reload();
     }
 
     return (
@@ -26,13 +25,6 @@ const NavBar = () => {
             </div>
 
             <div className="right-corner">
-                <NavLink className="nav-item" to="/">
-                    <div className='image-container'>
-                        <img src={home} width="100" height="100" alt="Home" />
-                        <h5 className="image-text">Home</h5>
-                   </div>
-                </NavLink>
-
                 <NavLink className="nav-item" to="/challenge">
                     <div className='image-container'>
                         <img src={connection} width="100" height="100" alt="Challenge" />
@@ -47,7 +39,7 @@ const NavBar = () => {
                     </div>
                 </NavLink>
                 
-                <NavLink className="nav-item" to="/back" onClick={handleClick}>
+                <NavLink className="nav-item" to="/" onClick={handleClick}>
                     <div className='image-container'>     
                         <img src={leftArrow} width="100" height="100" alt="Back" />
                         <h5 className="image-text">Logout</h5>
