@@ -15,7 +15,6 @@ const fetchQuestions = async (categoryId, difficulty) => {
 };
 
 const shuffleAnswers = array => {
-  console.log(array);
   let currentIndex = array.length,  randomIndex;
 
   // While there remain elements to shuffle.
@@ -29,8 +28,6 @@ const shuffleAnswers = array => {
     [array[currentIndex], array[randomIndex]] = [
       array[randomIndex], array[currentIndex]];
   }
-
-  console.log(array);
 
   return array;
 }

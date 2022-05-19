@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Modal } from 'react-bootstrap';
-import { setChallengePending } from '../../actions';
 import './modal.css';
 
 export default function ChallengeModalBox() {
-
-  const dispatch = useDispatch();
   // ----- MODAL GETTING INFO IF PCHALLENGE IS PENDING
-  const socket = useSelector(state => state.socket);
   const challengePending = useSelector(state => state.challengePending);
 
   return (
     <>
 
-      <Modal show={challengePending}>
+      <Modal size="lg"
+        centered
+        show={challengePending}
+        backdrop="static"
+        keyboard={false}>
 
 
         <h3>Awaiting challenge to be accepted</h3>

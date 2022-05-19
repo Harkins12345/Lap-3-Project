@@ -10,13 +10,19 @@ function GameRoomPage() {
 
     const [score, setScore] = useState(0);
     const [timeLeft, setTime] = useState(10);
+    const [resultData, setResultData] = useState({});
 
-    useEffect(() => {
-        if (socket){
-            socket.on('sendScore', data => setScore(data));
-            socket.on('tickTimer', time => setTime(time));
-        }
-    }, [])
+    if (socket){
+        socket.on('sendScore', data => setScore(data));
+        socket.on('tickTimer', time => setTime(time));
+        socket.on('gameOver', (winner, loser, draw) => {
+            setResultData({...resultData,
+                winner: winner,
+                loser: loser,
+                draw: draw
+            })
+        })
+    }
    
     return (
         <div className="main-container">

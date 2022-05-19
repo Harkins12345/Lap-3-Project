@@ -23,6 +23,11 @@ const gameInfoSchema = new mongoose.Schema({
     type: Number,
     required: false,
     default: 0
+  },
+  totalDraws: {
+    type: Number,
+    required: false,
+    default: 0
   }
 })
 
