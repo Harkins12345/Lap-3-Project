@@ -65,6 +65,9 @@ module.exports = class User {
                 case 'totalLosses': await Schema.User.findOneAndUpdate({ 'username': username },
                     { '$inc': { 'gameInfo.totalLosses': amount } })
                     break;
+                case 'totalDraws': await Schema.User.findOneAndUpdate({ 'username': username },
+                    { '$inc': { 'gameInfo.totalDraws': amount } })
+                    break;
                 default:
                     break;
             }
