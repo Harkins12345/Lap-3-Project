@@ -118,4 +118,4 @@ async function validateWebtoken(req, res) {
 
 
 
-module.exports = { getSignup, addUser, getLogin, loginUser, getLogout, validateWebtoken }
+module.exports = { handleErrors, getSignup, addUser, getLogin, loginUser, getLogout, validateWebtoken }
