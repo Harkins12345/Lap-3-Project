@@ -40,7 +40,6 @@ io.on('connection', (socket) => {
 
             let timeLeft = 11;
             let questionIndex = 0;
-            let gameOver = false;
             let answers;
 
             const quizData = await fetchQuestions(data.category, data.difficulty);
@@ -54,7 +53,6 @@ io.on('connection', (socket) => {
                 })
             io.fetchSockets()
                 .then(sockets => sockets.forEach(s => {
-                    console.log('Starting game...')
                     s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.join(roomId) : null
                     s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.emit("gameStarted", { category: data.category, difficulty: data.difficulty, gameRoom: roomId }) : null
                     s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['currScore'] = 0 : null
@@ -65,7 +63,6 @@ io.on('connection', (socket) => {
                 if (timeLeft === 0) {
                     questionIndex++;
                     if (questionIndex === quizData.length) {
-                        console.log("Game over...")
                         io.fetchSockets()
                             .then(sockets => sockets.filter(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername))
                             .then(filteredSockets => {
