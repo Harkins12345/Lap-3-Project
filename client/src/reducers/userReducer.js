@@ -1,4 +1,4 @@
-const initState = {username: "", totalScore: 0, gameScore: 0, requestPending: false, challengePending: false , inGame: false, error: false, socket: null};
+const initState = {username: "", totalScore: 0, gameScore: 0, requestPending: false, challengePending: false , inGame: false, error: false, socket: null, gameRoomId: null, gameCategory: null, gameDifficulty: null};
 
 const userReducer = (state = initState, action) => {
     switch (action.type) {
@@ -16,6 +16,8 @@ const userReducer = (state = initState, action) => {
             return { ...state, challengePending: action.payload };
         case 'SET_IN_GAME':
             return { ...state, inGame: action.payload };
+        case 'SET_GAME_DATA':
+            return { ...state, gameRoomId: action.payload.gameRoom, gameCategory: action.payload.category,  gameDifficulty: action.payload.difficulty}
         case 'SET_ERROR':
             return { ...state, error: action.payload };
         default:

@@ -5,7 +5,7 @@ import { Card, Dropdown, DropdownButton, Button, Stack, ToggleButtonGroup, Toggl
 import './challenge.css';
 
 import avatar1 from '../../images/avatar1.png';
-import { UserOnlineCard } from '../../components';
+import { UserOnlineCard } from '../../components'
 import { setChallengePending } from '../../actions';
 
 
@@ -14,25 +14,24 @@ function ChallengePage() {
 
 
     const socket = useSelector(state => state.socket);
+    const myUsername = useSelector(state => state.username);
 
-
-    // ------ uncomment useEffect once socket is running
-    // useEffect(() => {
-    //     socket.emit("getOnlineUsers")
-    //     socket.on("sendOnlineUsers", populateUsers)
-    // }, [])
-
-
-    const [ username, setUsername ] = useState("");
-    const [ category, setCategory ] = useState("");
-    const [ difficulty, setDifficulty ] = useState("");
+    const [category, setCategory] = useState("");
+    const [difficulty, setDifficulty] = useState("");
 
     // --- users to get all online, selected it the challengee user
-    const [ users, setUsers ] = useState([]);
-    const [ selectedUser, setSelectedUser ] = useState("");
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState("");
+
+    useEffect(() => {
+        socket.on("sendOnlineUsers", data => {
+            setUsers([...data])
+        })
+        socket.emit("getOnlineUsers")
+    }, [])
 
     const dispatch = useDispatch();
-   
+
     // ---- e is event | take value from event, to set category
     function handleCategory(e) {
         setCategory(e.target.value);
@@ -43,38 +42,36 @@ function ChallengePage() {
     }
 
     // ---- to get online users
-   function populateUsers(data) {
-       setUsers(data);
-   } 
+   
 
-   // ----- for selected user / challengeee
-   // ------ currentTarget goes to find parent element with event handler
-   function handleSelectedUser(e) {
-       console.log(e.currentTarget);
-       console.log(e.currentTarget.dataset.name);
-       setSelectedUser(e.currentTarget.dataset.name);
-   }
+    // ----- for selected user / challengeee
+    // ------ currentTarget goes to find parent element with event handler
+    function handleSelectedUser(e) {
+        console.log(e.currentTarget);
+        console.log(e.currentTarget.dataset.name);
+        setSelectedUser(e.currentTarget.dataset.name);
+    }
 
 
-  function handleSubmit()  {
-       const data = {
-           currentUser: username,
-           challengedUser: selectedUser,
-           category: category,
-           difficulty: difficulty
-       }
-
-       if (socket) {
-        socket.on('sendChallenge', data => console.log(data));
+    function handleSubmit() {
+        const data = {
+            requesterUsername: myUsername,
+            responderUsername: selectedUser,
+            category: category,
+            difficulty: difficulty
         }
-        dispatch(setChallengePending()); 
+
+        if (socket) {
+            socket.emit('sendRequestChallenge', data);
+        }
+        dispatch(setChallengePending(true));
     }
 
 
     const radios = [
-        { name: 'EASY', value: '1', className: "easy-button" },
-        { name: 'MEDIUM', value: '2', className: "medium-button" },
-        { name: 'HARD', value: '3', className: "hard-button" },
+        { name: 'EASY', value: 'easy', className: "easy-button" },
+        { name: 'MEDIUM', value: 'medium', className: "medium-button" },
+        { name: 'HARD', value: 'hard', className: "hard-button" },
     ];
 
 
@@ -85,7 +82,7 @@ function ChallengePage() {
         <div className="main-container">
 
 
-          
+
             <div className="left-container">
 
                 {/* ------------------ ONLINE USERS ------------- */}
@@ -95,17 +92,10 @@ function ChallengePage() {
                         {/* --------- INSIDE STACK, CREATE NEW CARD FOR EACH USER ONLINE ----- */}
                         {/* {users.map(u => <UserOnlineCard onClick={handleSelectedUser} />)} */}
 
-                       
+
                     </div>
                     <div className="stack">
-                        <Card className="online-card" data-name="elevate" onClick={handleSelectedUser}>
-
-                            <Card.Body className="card-body">
-                                <Card.Img src={avatar1} className="avatar" width="100" height="100" alt="User Image" />
-                                <Card.Text>Science: Mathematics</Card.Text>
-                            </Card.Body>
-                            <Card.Header className="card-header">USERNAME</Card.Header>
-                        </Card>
+                        {users !== [] ? users.map(user => user !== myUsername ? <UserOnlineCard username={user} handleSelectedUser={handleSelectedUser} /> : null) : <h1>Loading...</h1>}
                     </div>
                 </Stack>
 
@@ -119,66 +109,66 @@ function ChallengePage() {
 
 
 
-            <div className='right-container'> 
-                { selectedUser && <>
+            <div className='right-container'>
+                {selectedUser && <>
 
-                {/* ----- SELECT CATEGORY ----- */}
-                <div className="category-row row">
-
-                            
-                    <DropdownButton onClick={handleCategory} id="category-button" title="CATEGORY" size="lg" className='d-grid gap-2'>
+                    {/* ----- SELECT CATEGORY ----- */}
+                    <div className="category-row row">
 
 
-                        <Dropdown.Item as="button" value={17} >Science & Nature</Dropdown.Item>
-                        <Dropdown.Item as="button" value={18} >Science: Computer</Dropdown.Item>
-                        <Dropdown.Item as="button" value={19} >Science: Mathematics</Dropdown.Item>
-                        <Dropdown.Item as="button" value={22} >Geography</Dropdown.Item>
-                        <Dropdown.Item as="button" value={23} >History</Dropdown.Item>
+                        <DropdownButton onClick={handleCategory} id="category-button" title="CATEGORY" size="lg" className='d-grid gap-2'>
 
 
-
-                    </DropdownButton >
-
-                </div>
-
-                {/* ----- SELECT LEVEL ----- */}
-                <div className="level-row row">
+                            <Dropdown.Item as="button" value={17} >Science & Nature</Dropdown.Item>
+                            <Dropdown.Item as="button" value={18} >Science: Computer</Dropdown.Item>
+                            <Dropdown.Item as="button" value={19} >Science: Mathematics</Dropdown.Item>
+                            <Dropdown.Item as="button" value={22} >Geography</Dropdown.Item>
+                            <Dropdown.Item as="button" value={23} >History</Dropdown.Item>
 
 
 
-                    <ToggleButtonGroup onClick={handleDifficulty} value={difficulty} name="toggle" size="lg">
+                        </DropdownButton >
 
-                        {radios.map((radio, idx) => (
-                            <ToggleButton
-                                key={idx}
-                                id={`radio-${idx}`}
-                                className={radio.className}
-                                type="radio"
-                                name="radio"
-                                value={radio.value}
-                                checked={difficulty === radio.value}
-                                onChange={(e) => setDifficulty(e.currentTarget.value)}
-                            >
-                                {radio.name}
-                            </ToggleButton>
-                        ))}
-
-                    </ToggleButtonGroup>
-
-                </div>
-
-                {/* ----- START CHALLENGE ----- */}
-                <div className="start-row row">
-
-                    <div className='d-grid gap-2'>
-                        <Button onClick={handleSubmit} className='start-button' size="lg"> START THE CHALLENGE</Button>
                     </div>
 
-                </div>
+                    {/* ----- SELECT LEVEL ----- */}
+                    <div className="level-row row">
 
-                </>}   
+
+
+                        <ToggleButtonGroup onClick={handleDifficulty} value={difficulty} name="toggle" size="lg">
+
+                            {radios.map((radio, idx) => (
+                                <ToggleButton
+                                    key={idx}
+                                    id={`radio-${idx}`}
+                                    className={radio.className}
+                                    type="radio"
+                                    name="radio"
+                                    value={radio.value}
+                                    checked={difficulty === radio.value}
+                                    onChange={(e) => setDifficulty(e.currentTarget.value)}
+                                >
+                                    {radio.name}
+                                </ToggleButton>
+                            ))}
+
+                        </ToggleButtonGroup>
+
+                    </div>
+
+                    {/* ----- START CHALLENGE ----- */}
+                    <div className="start-row row">
+
+                        <div className='d-grid gap-2'>
+                            <Button onClick={handleSubmit} className='start-button' size="lg"> START THE CHALLENGE</Button>
+                        </div>
+
+                    </div>
+
+                </>}
             </div>
-        
+
 
         </div>
     )

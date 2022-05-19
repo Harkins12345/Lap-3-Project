@@ -2,12 +2,10 @@ const axios = require("axios");
 
 const URL = "https://opentdb.com/";
 
-const fetchQuestions = async (categoryId) => {
+const fetchQuestions = async (categoryId, difficulty) => {
   try {
-    const token = fetchToken()
     const res = await axios.get(
-      `${URL}api.php?amount=1&category=${categoryId}&type=multiple${token !==
-        null && `&token=${token}`}&encode=url3986`
+      `${URL}api.php?amount=10&category=${categoryId}&difficulty=${difficulty}&type=multiple`
     );
     return res.data.results;
   } catch (err) {
@@ -16,32 +14,25 @@ const fetchQuestions = async (categoryId) => {
   }
 };
 
-const fetchToken = async () => {
-  try {
-    const res = await axios.get(`${URL}api_token.php?command=request`);
-    console.log(res.data.token);
-    return res.data.token;
-  } catch (err) {
-    console.log(err);
-    return null;
-  }
-};
+const shuffleAnswers = array => {
+  console.log(array);
+  let currentIndex = array.length,  randomIndex;
 
-const shuffleAnswers = arr => {
-    console.log(arr);
-    let currIdx = arr.length,
-      tempVal,
-      randomIdx;
-  
-    while (currIdx !== 0) {
-      randomIdx = Math.floor(Math.random() * currIdx);
-      currIdx -= 1;
-      tempVal = arr[currIdx];
-      arr[currIdx] = arr[randomIdx];
-      arr[randomIdx] = tempVal;
-    }
-    console.log(arr);
-    return arr;
-  };
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
+
+  console.log(array);
+
+  return array;
+}
 
 module.exports = { fetchQuestions, shuffleAnswers };
