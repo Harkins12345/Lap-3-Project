@@ -9,12 +9,12 @@ function GameRoomPage() {
     const socket = useSelector(state => state.socket)
 
     const [score, setScore] = useState(0);
-    const [timeLeft, setTime] = useState(0);
+    const [timeLeft, setTime] = useState(10);
 
     useEffect(() => {
         if (socket){
             socket.on('sendScore', data => setScore(data));
-            socket.on('tickTimer', time => setTime());
+            socket.on('tickTimer', time => setTime(time));
         }
     }, [])
    

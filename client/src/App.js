@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
-
-import { NavBar } from './components';;
 import { NavBar, ChallengeModalBox, RequestModalBox } from './components';
 
-import { setUsername, setSocket, setChallengePending, setInGame, setRequestPending } from './actions';
+import { setUsername, setSocket, setInGame, setChallengePending, setRequestPending, setGameData } from './actions';
 import io from 'socket.io-client';
 import axios from 'axios';
 
@@ -17,13 +15,14 @@ import './index.css';
 function App() {
 
   const dispatch = useDispatch();
+  const goto = useNavigate();
 
   const username = useSelector(state => state.username);
   const inGame = useSelector(state => state.inGame);
 
   useEffect(() => {
 
-    dispatch(setUsername("khari"));
+    //dispatch(setUsername("khari"));
 
     const options = {
       headers: new Headers({ 'Authorization': `Bearer ${localStorage.getItem('token')}` })
@@ -32,15 +31,29 @@ function App() {
     axios.post(`${window.location.origin}/validate`, options)
       .then(res => {
         if (res.status === 200) {
+
           const socket = io(window.location.origin);
           socket.emit('setUsername', res.data.username);
+
           dispatch(setUsername(res.data.username));
           dispatch(setSocket(socket));
-          socket.on('sentChallenge', data => {
+
+          socket.on("sentChallenge", data => {
             dispatch(setRequestPending(true))
           })
-          socket.on("gameStarted", data => {
 
+          socket.on("challengeNotAccepted", data => {
+            console.log("Not accepted")
+            dispatch(setChallengePending(false))
+          })
+          
+          socket.on("gameStarted", gameData => {
+            console.log('Starting game client...')
+            dispatch(setInGame(true))
+            dispatch(setGameData(gameData))
+            dispatch(setRequestPending(false))
+            dispatch(setChallengePending(false))
+            goto('/gameroom', {replace:true})
           })
         }
       })

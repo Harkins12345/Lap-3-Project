@@ -5,38 +5,50 @@ import Button from 'react-bootstrap/Button';
 
 function QuestionBox() {
     const socket = useSelector(state => state.socket);
-    const roomId = useSelector(state => state.roomId);
+    const roomId = useSelector(state => state.gameRoomId);
     const username = useSelector(state => state.username);
 
-    useEffect(() => {
-        if (socket){
-            socket.on('sendQuestion', question => {
-                setQuestionData(question);
-                setSelect(null);
-                setCorrect(null);
-            })
-            socket.on('validatedAnswer', answer => setCorrect(answer))
-        }
-    }, [])
+    const [questionData, setQuestionData] = useState({});
 
-    const [questionData, setQuestionData] = useState({
-        question: "Hello world?",
-        answers: ["Hello", "World", "Yes", "No"]
+    const [gameState, setGameState] = useState({
+        correct: null,
+        select: false,
     });
 
-    const [correct, setCorrect] = useState("Hello");
-    const [select, setSelect] = useState(null);
+    if (socket){
+        socket.on('sendQuestion', question => {
+            setQuestionData({...question});
+            setGameState({...gameState,
+                select: false,
+                correct: null
+            })
+        })
+        socket.on('validatedAnswer', answer => {
+            setGameState({...gameState,
+            correct: answer
+        })
+
+        gameState.correct === questionData.answers.at(gameState.select) ? socket.emit("correctAnswer", username) : socket.emit("incorrectAnswer", username)
+    
+    }
+        )
+    }
+
+    useEffect(() => {
+        console.log(gameState)
+    }, [gameState])
 
     const handleClick = (e) => {
-        setSelect(e.target.value)
-        socket.emit('checkAnswer', roomId, username)
-        questionData.answers.at(e.target.value) === correct ? e.target.variant = 'success' : e.target.variant = 'danger'
+        setGameState({...gameState,
+            select: e.target.value
+        })
+        socket.emit('checkAnswer', roomId)
     }
 
     const handleVariant = (id) => {
-        if(select && questionData.answers.at(id) === correct){
+        if(gameState.select && questionData.answers.at(id) === gameState.correct){
             return 'success'
-        } else if (select && parseInt(select) === id && questionData.answers.at(id) !== correct) {
+        } else if (gameState.select && parseInt(gameState.select) === id && questionData.answers.at(id) !== gameState.correct) {
             return 'danger'
         } else {
             return 'outline-dark'
@@ -54,7 +66,7 @@ function QuestionBox() {
                 onClick={handleClick}
                 size='lg' 
                 className='answerSelect'
-                disabled={select ? true : false}
+                disabled={gameState.select ? true : false}
                 variant={handleVariant(index)}>{answer}</Button>) : <h1>Loading Answers...</h1>}
             </Card.Body>
         </Card>

@@ -1,42 +1,52 @@
 import React, { useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import './modal.css';
 
-export default function  RequestModalBox() {
+import { setRequestPending } from '../../actions';
+
+export default function RequestModalBox() {
 
 
-    
-  
-    const requestPending = useSelector(state => state.requestPending);
-    const challengePending = useSelector(state => state.challengePending);
-    const inGame = useSelector(state => state.inGame);
+  const dispatch = useDispatch();
 
+  const socket = useSelector(state => state.socket);
+  const requestPending = useSelector(state => state.requestPending);
 
+  const [challengeData, setChallengeData] = useState({});
 
-    function handleAccept(e){
-        inGame(true);
-    }
+  if(socket){
+    socket.on("sentChallenge", data => {
+      setChallengeData({...data})
+    })
+  }
 
-    function handleReject(e){
-        challengePending(false);
-    }
+  function handleAccept(e) {
+    socket.emit('challengeResponse', challengeData, true);
+    setChallengeData({});
+  }
 
-    return (
-     <>
+  function handleReject(e) {
+    dispatch(setRequestPending(false));
+    socket.emit('challengeResponse', challengeData, false);
+    setChallengeData({});
+  }
 
-        <Modal show={requestPending}>
-           
-          <h3>Awaiting challenge to be accepted</h3>
+  return (
+    <>
 
-          <div className='d-grid gap-2'>
-            <Button onClick={handleAccept} className='accept-button' size="md">ACCEPT</Button>
-            <Button onClick={handleReject} className='reject-button' size="md">REJECT</Button>
+      <Modal show={requestPending}>
+
+        <h3>Awaiting challenge to be accepted</h3>
+
+        <div className='d-grid gap-2'>
+          <Button onClick={handleAccept} className='accept-button' size="md">ACCEPT</Button>
+          <Button onClick={handleReject} className='reject-button' size="md">REJECT</Button>
         </div>
-        
-        </Modal>
 
-        
-      </>
-    )
+      </Modal>
+
+
+    </>
+  )
 }
