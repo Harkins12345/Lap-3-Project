@@ -6,12 +6,12 @@ import './userOnline.css';
 const UserOnlineCard = ({username, handleSelectedUser}) => {
 
     return (
-        <Card className="online-card" data-name={username} onClick={handleSelectedUser}>
+        <Card role="card" className="online-card" data-name={username} onClick={handleSelectedUser}>
             <Card.Body className="card-body">
                 <Card.Img src={avatar} className="avatar" width="100" height="100" alt="User Image" />
                 <Card.Text>Science: Computing</Card.Text>
             </Card.Body>
-            <Card.Header className="card-header">{username}</Card.Header>
+            <Card.Header role="heading" className="card-header">{username}</Card.Header>
         </Card>
     )
 }
