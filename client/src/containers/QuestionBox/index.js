@@ -15,38 +15,43 @@ function QuestionBox() {
         select: false,
     });
 
-    if (socket){
+    if (socket) {
         socket.on('sendQuestion', question => {
-            setQuestionData({...question});
-            setGameState({...gameState,
+            setQuestionData({ ...question });
+            setGameState({
+                ...gameState,
                 select: false,
                 correct: null
             })
         })
         socket.on('validatedAnswer', answer => {
-            setGameState({...gameState,
-            correct: answer
+            setGameState({
+                ...gameState,
+                correct: answer
+            })
         })
-
-        gameState.correct === questionData.answers.at(gameState.select) ? socket.emit("correctAnswer", username) : socket.emit("incorrectAnswer", username)
-    
-    }
-        )
     }
 
     useEffect(() => {
-        console.log(gameState)
-    }, [gameState])
+        console.log(questionData);
+        console.log(gameState);
+        if (gameState.select){
+            if (gameState.correct === questionData.answers.at(gameState.select)){
+                socket.emit('correctAnswer', username)
+            }
+        }
+    }, [questionData, gameState])
 
     const handleClick = (e) => {
-        setGameState({...gameState,
+        setGameState({
+            ...gameState,
             select: e.target.value
         })
         socket.emit('checkAnswer', roomId)
     }
 
     const handleVariant = (id) => {
-        if(gameState.select && questionData.answers.at(id) === gameState.correct){
+        if (gameState.select && questionData.answers.at(id) === gameState.correct) {
             return 'success'
         } else if (gameState.select && parseInt(gameState.select) === id && questionData.answers.at(id) !== gameState.correct) {
             return 'danger'
@@ -57,17 +62,17 @@ function QuestionBox() {
 
     return (
         <Card>
-            { questionData.question ? <Card.Header>{questionData.question}</Card.Header> : <Card.Header>Loading Question...</Card.Header> }
+            {questionData.question ? <Card.Header>{questionData.question}</Card.Header> : <Card.Header>Loading Question...</Card.Header>}
             <Card.Body>
-                {questionData.answers ? questionData.answers.map((answer, index) => 
-                <Button 
-                key={index} 
-                value={index} 
-                onClick={handleClick}
-                size='lg' 
-                className='answerSelect'
-                disabled={gameState.select ? true : false}
-                variant={handleVariant(index)}>{answer}</Button>) : <h1>Loading Answers...</h1>}
+                {questionData.answers ? questionData.answers.map((answer, index) =>
+                    <Button
+                        key={index}
+                        value={index}
+                        onClick={handleClick}
+                        size='lg'
+                        className='answerSelect'
+                        disabled={gameState.select ? true : false}
+                        variant={handleVariant(index)}>{answer}</Button>) : <h1>Loading Answers...</h1>}
             </Card.Body>
         </Card>
     );

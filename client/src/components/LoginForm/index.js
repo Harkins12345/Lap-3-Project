@@ -27,6 +27,7 @@ const LoginForm = () => {
             .then(res => res.data)
             .then(data => {
                 if (data.user) {
+                    console.log('Logging in...')
                     const socket = io(window.location.origin);
                     socket.emit('setUsername', data.user);
                     dispatch(setUsername(data.user));

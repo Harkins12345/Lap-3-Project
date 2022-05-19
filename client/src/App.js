@@ -19,6 +19,7 @@ function App() {
 
   const username = useSelector(state => state.username);
   const inGame = useSelector(state => state.inGame);
+  const socket = useSelector(state => state.socket);
 
   useEffect(() => {
 
@@ -37,30 +38,34 @@ function App() {
 
           dispatch(setUsername(res.data.username));
           dispatch(setSocket(socket));
-
-          socket.on("sentChallenge", data => {
-            dispatch(setRequestPending(true))
-          })
-
-          socket.on("challengeNotAccepted", data => {
-            console.log("Not accepted")
-            dispatch(setChallengePending(false))
-          })
-          
-          socket.on("gameStarted", gameData => {
-            console.log('Starting game client...')
-            dispatch(setInGame(true))
-            dispatch(setGameData(gameData))
-            dispatch(setRequestPending(false))
-            dispatch(setChallengePending(false))
-            goto('/gameroom', {replace:true})
-          })
         }
       })
       .catch(error => console.log(error))
 
 
   }, []);
+
+  useEffect(() => {
+    if(socket){
+      socket.on("sentChallenge", data => {
+        dispatch(setRequestPending(true))
+      })
+  
+      socket.on("challengeNotAccepted", data => {
+        console.log("Not accepted")
+        dispatch(setChallengePending(false))
+      })
+      
+      socket.on("gameStarted", gameData => {
+        console.log('Starting game client...')
+        dispatch(setInGame(true))
+        dispatch(setGameData(gameData))
+        dispatch(setRequestPending(false))
+        dispatch(setChallengePending(false))
+        goto('/gameroom', {replace:true})
+      })
+    }
+  }, [socket])
 
 
 

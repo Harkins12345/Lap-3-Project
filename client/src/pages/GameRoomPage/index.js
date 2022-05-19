@@ -11,22 +11,20 @@ function GameRoomPage() {
     const [score, setScore] = useState(0);
     const [timeLeft, setTime] = useState(10);
 
-    useEffect(() => {
-        if (socket){
-            socket.on('sendScore', data => setScore(data));
-            socket.on('tickTimer', time => setTime(time));
-        }
-    }, [])
-   
+    if (socket) {
+        socket.on('sendScore', data => setScore(data));
+        socket.on('tickTimer', time => setTime(time));
+    }
+
     return (
         <div className="main-container">
 
             {/* ------- LIVE COUNTDOWN TIMER ------- */}
             <div className="left-container">
 
-                <Card className="timer">
+                <Card>
                     <Card.Header>Your Score: {score}</Card.Header>
-                    <Card.Body className="timer-container">
+                    <Card.Body>
                         <h1>Time left</h1>
                         <h1>{timeLeft}</h1>
 

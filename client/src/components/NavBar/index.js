@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import './style.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 
@@ -12,6 +13,7 @@ import leftArrow from '../../images/left-arrow.gif';
 const NavBar = () => {
 
     const navigate = useNavigate();
+    const username = useSelector(state => state.username);
 
     // ---------- ADD FUNCTIONALITY TO LOGOUT USER INSTEAD ------ /// 
     function handleClick() {
@@ -26,7 +28,7 @@ const NavBar = () => {
             </div>
 
             <div className="right-corner">
-                <NavLink className="nav-item" to="/">
+            <NavLink className="nav-item" to="/">
                     <div className='image-container'>
                         <img src={home} width="100" height="100" alt="Home" />
                         <h5 className="image-text">Home</h5>
@@ -53,7 +55,6 @@ const NavBar = () => {
                         <h5 className="image-text">Logout</h5>
                     </div>
                 </NavLink>
-                
             </div>
         </nav>
     );

@@ -4,6 +4,7 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const cookieParser = require('cookie-parser');
 const { requireAuth, jwt } = require('./middleware/authMiddleware');
+const User = require('./models/User');
 const { fetchQuestions, shuffleAnswers } = require('./models/Quiz');
 const bodyParser = require("body-parser");
 
@@ -56,31 +57,62 @@ io.on('connection', (socket) => {
                     s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.join(roomId) : null
                     s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.emit("gameStarted", { category: data.category, difficulty: data.difficulty, gameRoom: roomId }) : null
                     s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['currScore'] = 0 : null
+                    s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['gameDifficulty'] = data.difficulty : null
                 }))
 
             setInterval(() => {
-                if (timeLeft === 0) {
-                    questionIndex++;
-                    timeLeft = 11;
-                }
-                if (timeLeft === 11) {
+                if (questionIndex === quizData.length) {
+                    console.log("Game over...")
+                    io.fetchSockets()
+                        .then(sockets => sockets.filter(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername))
+                        .then(filteredSockets => {
+                            User.updateGameInfo('totalScore', filteredSockets[0].data.currScore, filteredSockets[0].data.username)
+                            User.updateGameInfo('totalScore', filteredSockets[1].data.currScore, filteredSockets[1].data.username)
+
+                            User.updateGameInfo('totalGames', 1, filteredSockets[0].data.username)
+                            User.updateGameInfo('totalGames', 1, filteredSockets[1].data.username)
+
+                            if (filteredSockets[0].data.currScore === filteredSockets[1].data.currScore) {
+                                User.updateGameInfo('totalDraws', 1, filteredSockets[0].data.username)
+                                User.updateGameInfo('totalDraws', 1, filteredSockets[1].data.username)
+                                io.to(roomId).emit("gameOver", null, null, true);
+
+                            } else if (filteredSockets[0].data.currScore > filteredSockets[1].data.currScore) {
+                                User.updateGameInfo('totalWins', 1, filteredSockets[0].data.username)
+                                User.updateGameInfo('totalLosses', 1, filteredSockets[1].data.username)
+                                io.to(roomId).emit("gameOver", filteredSockets[0].data.username, filteredSockets[1].data.username, false);
+
+                            } else {
+                                User.updateGameInfo('totalWins', 1, filteredSockets[1].data.username)
+                                User.updateGameInfo('totalLosses', 1, filteredSockets[0].data.username)
+                                io.to(roomId).emit("gameOver", filteredSockets[1].data.username, filteredSockets[0].data.username, false);
+                            }
+                        })
+                    io.to(roomId).emit("gameOver", winner, loser, draw);
+                } else {
+                    if (timeLeft === 0) {
+                        questionIndex++;
+                        timeLeft = 11;
+                    }
+                    if (timeLeft === 11) {
+                        io.fetchSockets()
+                            .then(sockets => {
+                                sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['correct'] = quizData[questionIndex].correct_answer : null)
+                            })
+                        quizData[questionIndex].incorrect_answers.push(quizData[questionIndex].correct_answer);
+                        answers = shuffleAnswers(quizData[questionIndex].incorrect_answers);
+                        io.to(roomId).emit("sendQuestion", {
+                            question: quizData[questionIndex].question,
+                            answers: answers
+                        })
+                    }
+                    timeLeft--;
                     io.fetchSockets()
                         .then(sockets => {
-                            sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['correct'] = quizData[questionIndex].correct_answer : null)
+                            sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['timeLeft'] = timeLeft : null)
                         })
-                    quizData[questionIndex].incorrect_answers.push(quizData[questionIndex].correct_answer);
-                    answers = shuffleAnswers(quizData[questionIndex].incorrect_answers);
-                    io.to(roomId).emit("sendQuestion", {
-                        question: quizData[questionIndex].question,
-                        answers: answers
-                    })
+                    io.to(roomId).emit("tickTimer", timeLeft)
                 }
-                timeLeft--;
-                io.fetchSockets()
-                    .then(sockets => {
-                        sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['timeLeft'] = timeLeft : null)
-                    })
-                io.to(roomId).emit("tickTimer", timeLeft)
             }, 1000)
 
         } else {
@@ -96,7 +128,18 @@ io.on('connection', (socket) => {
         socket.emit("validatedAnswer", socket.data['correct'])
     })
 
-    //socket.on("")
+    socket.on("correctAnswer", username => {
+        const difficultyMulti = {
+            'easy': 1,
+            'medium': 1.5,
+            'hard': 2
+        }
+        io.fetchSockets()
+            .then(sockets => sockets.forEach(s => {
+                s.data.username === username ? s.data['currScore'] += (Math.floor((s.data['timeLeft'] / 10) * difficultyMulti[`${s.data.gameDifficulty}`] * 10)) : null
+                s.data.username === username ? s.emit('sendScore', s.data['currScore']) : null
+            }))
+    })
 
     socket.on('getOnlineUsers', data => {
         io.fetchSockets().then(sockets => io.emit('sendOnlineUsers', sockets.filter(s => s.data.username).map(s => s.data.username)))
