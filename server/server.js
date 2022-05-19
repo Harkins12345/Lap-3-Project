@@ -23,6 +23,23 @@ io.on('connection', (socket) => {
         socket.data.username = username;
     })
 
+    socket.on('getStats', async() => {
+        const playerStats = await User.getPlayerStats(socket.data.username)
+        const allPlayerStats = await User.getAllPlayerStats()
+        allPlayerStats.sort(function(playerA, playerB) {
+            return playerA['gameInfo']['totalScore'] - playerB['gameInfo']['totalScore'];
+          }).reverse()
+        console.log(allPlayerStats.slice(0, 3))
+        socket.emit('sendStats', {
+            totalGames: playerStats.totalGames,
+            totalScore: playerStats.totalScore,
+            totalWins: playerStats.totalWins,
+            totalLosses: playerStats.totalLosses,
+            totalDraws: playerStats.totalDraws,
+            topPlayers: allPlayerStats.slice(0, 3)
+        })
+    })
+
     socket.on('sendRequestChallenge', data => {
         socket.data['challengePending'] = true;
         socket.data['challengeData'] = {

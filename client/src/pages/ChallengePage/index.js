@@ -100,7 +100,7 @@ function ChallengePage() {
 
                 <div className="text-row row">
 
-                    <h1 className="online-status">Currently Online</h1>
+                    <h1 className="online-status">{users !== [] ? "Currently Online" : "No one is online!"}</h1>
 
                 </div>
 

@@ -18,9 +18,10 @@ module.exports = class User {
     static async findByUsername(username) {
         return new Promise(async (resolve, reject) => {
             try {
-                const user = Schema.User.findOne({ username: username.toLowerCase() });
+                const user = Schema.User.findOne({ username : username });
                 resolve(user);
             } catch (err) {
+                console.log(err)
                 reject(`User with username: ${username} not found`);
             }
         });
@@ -53,11 +54,23 @@ module.exports = class User {
     static async getPlayerStats(username) {
         return new Promise(async (resolve, reject) => {
             try {
-                const user = findByUsername(username);
-                console.log(user);
-                resolve(user);
+                const user = await this.findByUsername(username);
+                resolve(user.gameInfo);
             } catch (err) {
+                console.log(err)
                 reject(`User with username: ${username} not found`);
+            }
+        });
+    }
+
+    static async getAllPlayerStats() {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const users = await Schema.User.find({});
+                resolve(users);
+            } catch (err) {
+                console.log(err)
+                reject(`Players not found`);
             }
         });
     }
