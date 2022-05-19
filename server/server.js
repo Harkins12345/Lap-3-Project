@@ -40,6 +40,7 @@ io.on('connection', (socket) => {
 
             let timeLeft = 11;
             let questionIndex = 0;
+            let gameOver = false;
             let answers;
 
             const quizData = await fetchQuestions(data.category, data.difficulty);
@@ -60,59 +61,61 @@ io.on('connection', (socket) => {
                     s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['gameDifficulty'] = data.difficulty : null
                 }))
 
-            setInterval(() => {
-                if (questionIndex === quizData.length) {
-                    console.log("Game over...")
-                    io.fetchSockets()
-                        .then(sockets => sockets.filter(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername))
-                        .then(filteredSockets => {
-                            User.updateGameInfo('totalScore', filteredSockets[0].data.currScore, filteredSockets[0].data.username)
-                            User.updateGameInfo('totalScore', filteredSockets[1].data.currScore, filteredSockets[1].data.username)
+            const gameTick = setInterval(() => {
+                if (timeLeft === 0) {
+                    questionIndex++;
+                    if (questionIndex === quizData.length) {
+                        console.log("Game over...")
+                        io.fetchSockets()
+                            .then(sockets => sockets.filter(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername))
+                            .then(filteredSockets => {
+                                User.updateGameInfo('totalScore', filteredSockets[0].data.currScore, filteredSockets[0].data.username)
+                                User.updateGameInfo('totalScore', filteredSockets[1].data.currScore, filteredSockets[1].data.username)
 
-                            User.updateGameInfo('totalGames', 1, filteredSockets[0].data.username)
-                            User.updateGameInfo('totalGames', 1, filteredSockets[1].data.username)
+                                User.updateGameInfo('totalGames', 1, filteredSockets[0].data.username)
+                                User.updateGameInfo('totalGames', 1, filteredSockets[1].data.username)
 
-                            if (filteredSockets[0].data.currScore === filteredSockets[1].data.currScore) {
-                                User.updateGameInfo('totalDraws', 1, filteredSockets[0].data.username)
-                                User.updateGameInfo('totalDraws', 1, filteredSockets[1].data.username)
-                                io.to(roomId).emit("gameOver", null, null, true);
+                                if (filteredSockets[0].data.currScore === filteredSockets[1].data.currScore) {
+                                    User.updateGameInfo('totalDraws', 1, filteredSockets[0].data.username)
+                                    User.updateGameInfo('totalDraws', 1, filteredSockets[1].data.username)
+                                    io.to(roomId).emit("gameOver", null, null, true);
+                                    clearInterval(gameTick);
 
-                            } else if (filteredSockets[0].data.currScore > filteredSockets[1].data.currScore) {
-                                User.updateGameInfo('totalWins', 1, filteredSockets[0].data.username)
-                                User.updateGameInfo('totalLosses', 1, filteredSockets[1].data.username)
-                                io.to(roomId).emit("gameOver", filteredSockets[0].data.username, filteredSockets[1].data.username, false);
+                                } else if (filteredSockets[0].data.currScore > filteredSockets[1].data.currScore) {
+                                    User.updateGameInfo('totalWins', 1, filteredSockets[0].data.username)
+                                    User.updateGameInfo('totalLosses', 1, filteredSockets[1].data.username)
+                                    io.to(roomId).emit("gameOver", filteredSockets[0].data.username, filteredSockets[1].data.username, false);
+                                    clearInterval(gameTick);
 
-                            } else {
-                                User.updateGameInfo('totalWins', 1, filteredSockets[1].data.username)
-                                User.updateGameInfo('totalLosses', 1, filteredSockets[0].data.username)
-                                io.to(roomId).emit("gameOver", filteredSockets[1].data.username, filteredSockets[0].data.username, false);
-                            }
-                        })
-                    io.to(roomId).emit("gameOver", winner, loser, draw);
-                } else {
-                    if (timeLeft === 0) {
-                        questionIndex++;
+                                } else {
+                                    User.updateGameInfo('totalWins', 1, filteredSockets[1].data.username)
+                                    User.updateGameInfo('totalLosses', 1, filteredSockets[0].data.username)
+                                    io.to(roomId).emit("gameOver", filteredSockets[1].data.username, filteredSockets[0].data.username, false);
+                                    clearInterval(gameTick);
+                                }
+                            })
+                    } else {
                         timeLeft = 11;
                     }
-                    if (timeLeft === 11) {
-                        io.fetchSockets()
-                            .then(sockets => {
-                                sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['correct'] = quizData[questionIndex].correct_answer : null)
-                            })
-                        quizData[questionIndex].incorrect_answers.push(quizData[questionIndex].correct_answer);
-                        answers = shuffleAnswers(quizData[questionIndex].incorrect_answers);
-                        io.to(roomId).emit("sendQuestion", {
-                            question: quizData[questionIndex].question,
-                            answers: answers
-                        })
-                    }
-                    timeLeft--;
+                }
+                if (timeLeft === 11) {
                     io.fetchSockets()
                         .then(sockets => {
-                            sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['timeLeft'] = timeLeft : null)
+                            sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['correct'] = quizData[questionIndex].correct_answer : null)
                         })
-                    io.to(roomId).emit("tickTimer", timeLeft)
+                    quizData[questionIndex].incorrect_answers.push(quizData[questionIndex].correct_answer);
+                    answers = shuffleAnswers(quizData[questionIndex].incorrect_answers);
+                    io.to(roomId).emit("sendQuestion", {
+                        question: quizData[questionIndex].question,
+                        answers: answers
+                    })
                 }
+                timeLeft--;
+                io.fetchSockets()
+                    .then(sockets => {
+                        sockets.forEach(s => s.data.username === data.responderUsername || s.data.username === data.requesterUsername ? s.data['timeLeft'] = timeLeft : null)
+                    })
+                io.to(roomId).emit("tickTimer", timeLeft)
             }, 1000)
 
         } else {
@@ -124,7 +127,6 @@ io.on('connection', (socket) => {
     })
 
     socket.on("checkAnswer", data => {
-        console.log('Sending answer...')
         socket.emit("validatedAnswer", socket.data['correct'])
     })
 
