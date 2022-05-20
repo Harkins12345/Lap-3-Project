@@ -3,7 +3,7 @@
     "scripts": {
         "start": "node index.js",
         "dev": "nodemon --legacy-watch",
-        "test": "jest tests --watchAll --detectOpenHandles --runInBand --verbose",
+        "test": "jest tests --watchAll --detectOpenHandles --runInBand --verbose --coverage",
         "unitTests": "jest --testPathPattern=/unit/ --watchAll --verbose",
         "coverage": "jest --testPathPattern=/unit/ --coverage"
     },
@@ -16,6 +16,7 @@
     "author": "Apex Gaming",
     "license": "ISC",
     "devDependencies": {
+        "@shelf/jest-mongodb": "^2.2.2",
         "jest": "^26.4.2",
         "nodemon": "^2.0.4",
         "supertest": "^4.0.2"
