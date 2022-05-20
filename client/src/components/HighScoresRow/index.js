@@ -4,7 +4,7 @@ import monkey from '../../images/monkey.png';
 import './highScores.css';
 
 
-const HighScoresRow = () => {
+const HighScoresRow = ({username, totalGames, totalScore}) => {
     return (
         
         <Row>
@@ -16,9 +16,9 @@ const HighScoresRow = () => {
             <Col md={8} className="stats-text-on-right">
                 <div className='stats-column'>
                         
-                    <h3>USERNAME</h3>
-                    <h5>Battles: 578 </h5>
-                    <h6>Current Score: 25, 567</h6>   
+                    <h3>{username}</h3>
+                    <h5>Duels: {totalGames}</h5>
+                    <h6>Current Score: {totalScore}</h6>   
                 </div>
             </Col>
         </Row>   

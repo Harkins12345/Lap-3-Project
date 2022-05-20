@@ -27,16 +27,16 @@ function QuestionBox() {
             setGameState({...gameState,
             correct: answer
         })
-
-        gameState.correct === questionData.answers.at(gameState.select) ? socket.emit("correctAnswer", username) : socket.emit("incorrectAnswer", username)
-    
-    }
-        )
+    })
     }
 
     useEffect(() => {
-        console.log(gameState)
-    }, [gameState])
+        if(gameState.correct){
+            if(gameState.correct === questionData.answers.at(gameState.select)){
+                socket.emit("correctAnswer", username)
+            }
+        }
+    }, [questionData, gameState])
 
     const handleClick = (e) => {
         setGameState({...gameState,

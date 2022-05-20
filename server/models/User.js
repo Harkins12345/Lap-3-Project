@@ -50,6 +50,18 @@ module.exports = class User {
         throw Error('Incorrect email')
     }
 
+    static async getPlayerStats(username) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const user = findByUsername(username);
+                console.log(user);
+                resolve(user);
+            } catch (err) {
+                reject(`User with username: ${username} not found`);
+            }
+        });
+    }
+
     static async updateGameInfo(type, amount, username) {
         try {
             switch (type) {
@@ -64,6 +76,9 @@ module.exports = class User {
                     break;
                 case 'totalLosses': await Schema.User.findOneAndUpdate({ 'username': username },
                     { '$inc': { 'gameInfo.totalLosses': amount } })
+                    break;
+                case 'totalDraws': await Schema.User.findOneAndUpdate({ 'username': username },
+                    { '$inc': { 'gameInfo.totalDraws': amount } })
                     break;
                 default:
                     break;
