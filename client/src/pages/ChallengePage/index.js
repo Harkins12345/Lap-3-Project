@@ -95,7 +95,7 @@ function ChallengePage() {
 
                     </div>
                     <div className="stack">
-                        {users !== [] ? users.map(user => user !== myUsername ? <UserOnlineCard username={user} handleSelectedUser={handleSelectedUser} /> : null) : <h1>Loading...</h1>}
+                        {users !== [] ? users.map(user => user !== myUsername ? <UserOnlineCard username={user} onClick={handleSelectedUser} /> : null) : <h1>Loading...</h1>}
                     </div>
                 </Stack>
 
@@ -161,7 +161,7 @@ function ChallengePage() {
                     <div className="start-row row">
 
                         <div className='d-grid gap-2'>
-                            <Button onClick={handleSubmit} className='start-button' size="lg"> START THE CHALLENGE</Button>
+                            <Button onClick={handleSubmit} className='start-button' role="button" size="lg"> START THE CHALLENGE</Button>
                         </div>
 
                     </div>

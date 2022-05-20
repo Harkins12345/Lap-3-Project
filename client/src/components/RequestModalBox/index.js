@@ -40,8 +40,8 @@ export default function RequestModalBox() {
         <h3>Awaiting challenge to be accepted</h3>
 
         <div className='d-grid gap-2'>
-          <Button onClick={handleAccept} className='accept-button' size="md">ACCEPT</Button>
-          <Button onClick={handleReject} className='reject-button' size="md">REJECT</Button>
+          <Button onClick={handleAccept} className='accept-button' role="button" size="md">ACCEPT</Button>
+          <Button onClick={handleReject} className='reject-button' role="button" size="md">REJECT</Button>
         </div>
 
       </Modal>
