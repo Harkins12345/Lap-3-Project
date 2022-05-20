@@ -7,7 +7,7 @@ import { default as UserOnlineCard } from './';
 describe('<UserOnlineCard />', () => {
     const onClickMock = jest.fn();
 
-    beforeEach(() => {
+    beforeEach(() => { //clears it 
 
         // --- RENDER NEEDS ALL THE SPECIFICS THAT PAGE SHOULD HAVE THEN CALLED LATER
         render(<UserOnlineCard 
