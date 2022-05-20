@@ -162,7 +162,7 @@ io.on('connection', (socket) => {
                     })
                 // Update timers of all players in the room, client side
                 io.to(roomId).emit("tickTimer", timeLeft)
-            }, 1000)
+            }, 300)
 
         // Challenge request rejected
         } else {

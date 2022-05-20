@@ -20,21 +20,21 @@ const NavBar = () => {
     }
 
     const navBarLinks = <>
-    <NavLink className="nav-item" to="/challenge">
+    <NavLink role="link" className="nav-item" to="/challenge">
                     <div className='image-container'>
                         <img src={connection} width="100" height="100" alt="Challenge" />
                         <h5 className="image-text-challenge">Challenge</h5>
                     </div>
                 </NavLink>
 
-                <NavLink className="nav-item" to="/stats">
+                <NavLink role="link" className="nav-item" to="/stats">
                     <div className='image-container'>  
                         <img src={account} width="100" height="100" alt="My Stats" />
                         <h5 className="image-text">Stats</h5>
                     </div>
                 </NavLink>
                 
-                <NavLink className="nav-item" to="/" onClick={handleClick}>
+                <NavLink role="link" className="nav-item" to="/" onClick={handleClick}>
                     <div className='image-container'>     
                         <img src={leftArrow} width="100" height="100" alt="Back" />
                         <h5 className="image-text">Logout</h5>

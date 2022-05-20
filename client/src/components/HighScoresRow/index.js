@@ -16,9 +16,9 @@ const HighScoresRow = ({username, totalGames, totalScore}) => {
             <Col md={8} className="stats-text-on-right">
                 <div className='stats-column'>
                         
-                    <h3>{username}</h3>
-                    <h5>Duels: {totalGames}</h5>
-                    <h6>Current Score: {totalScore}</h6>   
+                    <h3 aria-label='username-heading'>{username}</h3>
+                    <h5 aria-label='duels-heading'>Duels: {totalGames}</h5>
+                    <h6 aria-label='current-score-heading'>Current Score: {totalScore}</h6>   
                 </div>
             </Col>
         </Row>   

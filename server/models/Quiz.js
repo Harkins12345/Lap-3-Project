@@ -5,7 +5,7 @@ const URL = "https://opentdb.com/";
 const fetchQuestions = async (categoryId, difficulty) => {
   try {
     const res = await axios.get(
-      `${URL}api.php?amount=10&category=${categoryId}&difficulty=${difficulty}&type=multiple`
+      `${URL}api.php?amount=3&category=${categoryId}&difficulty=${difficulty}&type=multiple`
     );
     return res.data.results;
   } catch (err) {
