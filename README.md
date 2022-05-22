@@ -4,6 +4,10 @@
 
 A quiz application that allows users to securely register, login and challenge themselves. Users can see other online users and challenge them to a battle of wits. Users should be able to see their stats on the stats page that includes high scores, wins & losses.
 
+# Heroku-Deployed
+
+- [ELEVATE HEROKU LINK](https://lap3-project-3l3vat3.herokuapp.com)
+
 ## Installation
 
 - clone the repository
