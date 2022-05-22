@@ -4,9 +4,9 @@ import monkey from '../../images/monkey.png';
 import './userStats.css';
 
 
-const UserStatsCard = ({ username, totalGames, totalScore, totalWins, totalLosses, totalDraws }) => {
+const UserStatsCard = ({ username, totalGames, totalScore, totalWins, totalLosses, totalDraws,handleSelectedUser }) => {
   return (
-    <Card className="stats-card">
+    <Card role ="cards" className="stats-card" onClick={handleSelectedUser}>
       <Card.Body className="stats-card-body">
         <Card.Img src={monkey} className="avatar" width="100" height="100" alt="User Image" />
         <Card.Text>
@@ -17,7 +17,7 @@ const UserStatsCard = ({ username, totalGames, totalScore, totalWins, totalLosse
           <h4>Draws: {totalDraws}</h4>
         </Card.Text>
       </Card.Body>
-      <Card.Header className="stats-card-header">
+      <Card.Header role="header" className="stats-card-header">
         <h2>{username}</h2></Card.Header>
 
     </Card>
