@@ -1,6 +1,6 @@
-# Lap-3-Project
+# 3l3VAT3
 
-# 3l3vat3
+# LAP3 Coding Project
 
 A quiz application that allows users to securely register, login and challenge themselves. Users can see other online users and challenge them to a battle of wits. Users should be able to see their stats on the stats page that includes high scores, wins & losses.
 
