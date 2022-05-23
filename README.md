@@ -7,6 +7,7 @@ A quiz application that allows users to securely register, login and challenge t
 # Heroku-Deployed
 
 - [ELEVATE HEROKU LINK](https://lap3-project-3l3vat3.herokuapp.com)
+- [PRESENTATION](https://www.canva.com/design/DAFBKMfaO2o/th4UqeGSM7fBMxchHgdf0Q/watch?utm_content=DAFBKMfaO2o&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
 
 ## Installation
 
